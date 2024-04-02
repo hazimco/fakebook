@@ -1,22 +1,9 @@
 const usersRouter = require("express").Router();
+const User = require("../models/user");
 
-let tempUsers = [
-  {
-    id: "1",
-    username: "tarantino",
-  },
-  {
-    id: "2",
-    username: "spielberg",
-  },
-  {
-    id: "3",
-    username: "nolan",
-  },
-];
-
-usersRouter.get("/", (req, res) => {
-  res.json(tempUsers);
+usersRouter.get("/", async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
 });
 
 module.exports = usersRouter;
