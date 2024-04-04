@@ -1,5 +1,6 @@
 const express = require("express");
 const usersRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 
 module.exports = app;
