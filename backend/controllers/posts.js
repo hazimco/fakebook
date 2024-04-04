@@ -35,13 +35,8 @@ postsRouter.post("/", async (req, res) => {
     user: user._id,
   });
 
-  try {
-    const savedPost = await post.save();
-    res.status(201).json(savedPost);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ error: error.message });
-  }
+  const savedPost = await post.save();
+  res.status(201).json(savedPost);
 });
 
 module.exports = postsRouter;
