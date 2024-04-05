@@ -25,8 +25,7 @@ const getTokenFromRequest = (req) => {
     : null;
 };
 
-/* adding user to request object */
-const userExtractor = async (req, res, next) => {
+const addUserToReqObject = async (req, res, next) => {
   const token = getTokenFromRequest(req);
 
   const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
@@ -48,5 +47,5 @@ const userExtractor = async (req, res, next) => {
 
 module.exports = {
   errorHandler,
-  userExtractor,
+  addUserToReqObject,
 };

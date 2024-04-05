@@ -7,7 +7,7 @@ postsRouter.get("/", async (req, res) => {
   res.json(posts);
 });
 
-postsRouter.post("/", middleware.userExtractor, async (req, res) => {
+postsRouter.post("/", middleware.addUserToReqObject, async (req, res) => {
   const { text } = req.body;
   const { user } = req;
 
