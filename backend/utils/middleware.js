@@ -17,20 +17,17 @@ const errorHandler = (err, req, res, next) => {
   next(err);
 };
 
-/* adding token to request object */
-const tokenExtractor = (req, res, next) => {
+const getTokenFromRequest = (req) => {
   const { authorization } = req.headers;
 
-  req.token = authorization?.startsWith("Bearer ")
+  return authorization?.startsWith("Bearer ")
     ? authorization.replace("Bearer ", "")
     : null;
-
-  next();
 };
 
 /* adding user to request object */
 const userExtractor = async (req, res, next) => {
-  const { token } = req;
+  const token = getTokenFromRequest(req);
 
   const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
   if (!decodedUser.id) {
@@ -51,6 +48,5 @@ const userExtractor = async (req, res, next) => {
 
 module.exports = {
   errorHandler,
-  tokenExtractor,
   userExtractor,
 };
