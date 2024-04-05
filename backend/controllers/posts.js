@@ -12,7 +12,7 @@ postsRouter.post("/", async (req, res) => {
   const { text } = req.body;
   const { authorization } = req.headers;
 
-  const token = authorization.startsWith("Bearer ")
+  const token = authorization?.startsWith("Bearer ")
     ? authorization.replace("Bearer ", "")
     : null;
 
