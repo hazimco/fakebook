@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const postsRouter = require("express").Router();
 const Post = require("../models/post");
-const User = require("../models/user");
+// const User = require("../models/user");
 const middleware = require("../utils/middleware");
 
 postsRouter.get("/", async (req, res) => {
@@ -9,35 +9,26 @@ postsRouter.get("/", async (req, res) => {
   res.json(posts);
 });
 
-postsRouter.post("/", middleware.tokenExtractor, async (req, res) => {
-  const { text } = req.body;
-  const { token } = req;
+postsRouter.post(
+  "/",
+  middleware.tokenExtractor,
+  middleware.userExtractor,
+  async (req, res) => {
+    const { text } = req.body;
+    const { user } = req;
 
-  const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
+    const post = new Post({
+      text,
+      user: user._id,
+    });
 
-  if (!decodedUser.id) {
-    res.status(401).json({ error: "invalid token" });
-    return;
+    const savedPost = await post.save();
+
+    user.posts = [...user.posts, savedPost._id];
+    await user.save();
+
+    res.status(201).json(savedPost);
   }
-
-  const user = await User.findById(decodedUser.id);
-
-  if (!user) {
-    res.status(404).json({ error: "user not found" });
-    return;
-  }
-
-  const post = new Post({
-    text,
-    user: user._id,
-  });
-
-  const savedPost = await post.save();
-
-  user.posts = [...user.posts, savedPost._id];
-  await user.save();
-
-  res.status(201).json(savedPost);
-});
+);
 
 module.exports = postsRouter;
