@@ -2,19 +2,16 @@ const jwt = require("jsonwebtoken");
 const postsRouter = require("express").Router();
 const Post = require("../models/post");
 const User = require("../models/user");
+const middleware = require("../utils/middleware");
 
 postsRouter.get("/", async (req, res) => {
   const posts = await Post.find({});
   res.json(posts);
 });
 
-postsRouter.post("/", async (req, res) => {
+postsRouter.post("/", middleware.tokenExtractor, async (req, res) => {
   const { text } = req.body;
-  const { authorization } = req.headers;
-
-  const token = authorization?.startsWith("Bearer ")
-    ? authorization.replace("Bearer ", "")
-    : null;
+  const { token } = req;
 
   const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
 

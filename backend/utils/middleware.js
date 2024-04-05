@@ -14,6 +14,18 @@ const errorHandler = (err, req, res, next) => {
   next(err);
 };
 
+/* adding token to request object */
+const tokenExtractor = (req, res, next) => {
+  const { authorization } = req.headers;
+
+  req.token = authorization?.startsWith("Bearer ")
+    ? authorization.replace("Bearer ", "")
+    : null;
+
+  next();
+};
+
 module.exports = {
   errorHandler,
+  tokenExtractor,
 };
