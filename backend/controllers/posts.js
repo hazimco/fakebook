@@ -36,6 +36,10 @@ postsRouter.post("/", async (req, res) => {
   });
 
   const savedPost = await post.save();
+
+  user.posts = [...user.posts, savedPost._id];
+  await user.save();
+
   res.status(201).json(savedPost);
 });
 
