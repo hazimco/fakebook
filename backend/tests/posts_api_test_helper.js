@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "test") {
+  throw new Error("### NODE_ENV is not set to 'test'");
+}
+
 const Post = require("../models/post");
 const User = require("../models/user");
 
