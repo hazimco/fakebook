@@ -5,6 +5,7 @@ const loginRouter = require("./controllers/login");
 const postsRouter = require("./controllers/posts");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
+const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 
 const app = express();
@@ -12,7 +13,7 @@ const app = express();
 mongoose
   .connect(config.MONGODB_URI)
   .then(() => {
-    console.log("Connected to MongoDB");
+    logger.log("Connected to MongoDB");
   })
   .catch((error) => {
     console.log("Error connecting to MongoDB:", error.message);

@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const logger = require("../utils/logger");
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err.message);
+  logger.log(err.message);
 
   if (
     ["TokenExpiredError", "JsonWebTokenError", "NotBeforeError"].includes(
