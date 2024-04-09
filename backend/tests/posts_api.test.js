@@ -1,11 +1,10 @@
-const API_PATH = "/api/posts";
-
 const mongoose = require("mongoose");
 const app = require("../app");
 const request = require("supertest");
 const api = request(app);
 const jwt = require("jsonwebtoken");
 
+const API_PATH = "/api/posts";
 const helper = require("./posts_api_test_helper");
 
 beforeAll(async () => {
@@ -92,6 +91,9 @@ describe("Endpoint /api/posts", () => {
           .expect("Content-Type", /application\/json/);
 
         expect(response.body.error).toBeDefined;
+
+        const postsInDb = await helper.testPostsInDb();
+        expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
 
       test("fails with status 400 when text is too long", async () => {
@@ -107,6 +109,9 @@ describe("Endpoint /api/posts", () => {
           .expect("Content-Type", /application\/json/);
 
         expect(response.body.error).toBeDefined();
+
+        const postsInDb = await helper.testPostsInDb();
+        expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
 
       test("fails with status 404 when user is not found", async () => {
@@ -129,6 +134,9 @@ describe("Endpoint /api/posts", () => {
           .expect("Content-Type", /application\/json/);
 
         expect(response.body.error).toBe("user not found");
+
+        const postsInDb = await helper.testPostsInDb();
+        expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
     });
 
@@ -150,7 +158,7 @@ describe("Endpoint /api/posts", () => {
 
         expect(response.body.error).toBe("jwt expired");
 
-        const postsInDb = await helper.testPostInDb();
+        const postsInDb = await helper.testPostsInDb();
         expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
 
@@ -170,7 +178,7 @@ describe("Endpoint /api/posts", () => {
 
         expect(response.body.error).toBe("invalid token");
 
-        const postsInDb = await helper.testPostInDb();
+        const postsInDb = await helper.testPostsInDb();
         expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
 
@@ -184,7 +192,7 @@ describe("Endpoint /api/posts", () => {
 
         expect(response.body.error).toBe("jwt malformed");
 
-        const postsInDb = await helper.testPostInDb();
+        const postsInDb = await helper.testPostsInDb();
         expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
 
@@ -197,7 +205,7 @@ describe("Endpoint /api/posts", () => {
 
         expect(response.body.error).toBe("jwt must be provided");
 
-        const postsInDb = await helper.testPostInDb();
+        const postsInDb = await helper.testPostsInDb();
         expect(postsInDb).toHaveLength(helper.testPosts.length);
       });
     });

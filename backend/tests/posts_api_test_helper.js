@@ -32,7 +32,7 @@ const deletePostFromDb = async (id) => {
   await Post.deleteOne({ _id: id });
 };
 
-const testPostInDb = async () => {
+const testPostsInDb = async () => {
   const posts = await Post.find({});
   return posts.map((post) => post.toJSON());
 };
@@ -41,7 +41,7 @@ module.exports = {
   initializeTestPosts,
   deletePostFromDb,
   testPosts,
-  testPostInDb,
+  testPostsInDb,
   testUser,
   validNonExistingUserId,
 };
