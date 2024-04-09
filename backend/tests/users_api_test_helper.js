@@ -13,7 +13,18 @@ const initializeTestUsers = async () => {
   await User.insertMany(testUsersWithPasswordHash);
 };
 
+const testUsersInDb = async () => {
+  const users = await User.find({});
+  return users.map((user) => user.toJSON());
+};
+
+const deleteUserFromDb = async (id) => {
+  await User.deleteOne({ _id: id });
+};
+
 module.exports = {
   initializeTestUsers,
+  deleteUserFromDb,
   testUsers,
+  testUsersInDb,
 };
