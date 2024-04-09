@@ -76,6 +76,12 @@ describe("Endpoint /api/posts", () => {
 
         expect(response.body).toStrictEqual(newPost);
 
+        const postsInDb = await helper.testPostsInDb();
+        expect(postsInDb).toHaveLength(helper.testPosts.length + 1);
+
+        newPost.user = userForToken.id;
+        expect(postsInDb).toContainEqual(newPost);
+
         //remove added post to not mess up tests that come later
         await helper.deletePostFromDb(newPost.id);
       });
