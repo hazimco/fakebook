@@ -1,5 +1,6 @@
 import { useState } from "react";
 import loginService from "../services/login";
+import useNotification from "../hooks/useNotification";
 
 const ErrorNotification = ({ message }) => {
   return <div>{message}</div>;
@@ -8,7 +9,8 @@ const ErrorNotification = ({ message }) => {
 const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
+
+  const [error, setError] = useNotification();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -21,9 +23,6 @@ const LoginForm = ({ setUser }) => {
       setUser(user);
     } catch (error) {
       setError(error?.response?.data?.error || error.message);
-      setTimeout(() => {
-        setError();
-      }, 5000);
     }
   };
 
