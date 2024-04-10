@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const config = require("./utils/config");
 const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
+const cors = require("cors");
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose
     console.log("Error connecting to MongoDB:", error.message);
   });
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
