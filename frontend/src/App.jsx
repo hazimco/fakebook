@@ -5,7 +5,13 @@ import LoginForm from "./components/LoginForm";
 const App = () => {
   const [user, setUser] = useState();
 
-  if (!user) return <LoginForm setUser={setUser} />;
+  if (!user)
+    return (
+      <div>
+        <h1>Fakebook</h1>
+        <LoginForm setUser={setUser} />
+      </div>
+    );
 
   return <>hello {user.username}</>;
 };
