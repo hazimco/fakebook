@@ -1,19 +1,30 @@
 import { useState } from "react";
 import loginService from "../services/login";
 
+const ErrorNotification = ({ message }) => {
+  return <div>{message}</div>;
+};
+
 const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const user = await loginService.login({
-      username,
-      password,
-    });
-
-    setUser(user);
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      setUser(user);
+    } catch (error) {
+      setError(error?.response?.data?.error || error.message);
+      setTimeout(() => {
+        setError();
+      }, 5000);
+    }
   };
 
   return (
@@ -36,6 +47,7 @@ const LoginForm = ({ setUser }) => {
         </div>
         <button>Log in</button>
       </form>
+      {error && <ErrorNotification message={error} />}
     </div>
   );
 };
