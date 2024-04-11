@@ -16,6 +16,8 @@ postsRouter.post("/", middleware.addUserToReqObject, async (req, res) => {
     user: user._id,
   });
 
+  await post.populate("user", { username: 1, id: 1 });
+
   const savedPost = await post.save();
 
   user.posts = [...user.posts, savedPost._id];
