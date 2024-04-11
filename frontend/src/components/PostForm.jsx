@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../services/posts";
 
 const postFormStyle = {
@@ -12,6 +12,8 @@ const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
+  const queryClient = useQueryClient();
+
   const closeForm = () => {
     setShowForm(false);
     setText("");
@@ -19,7 +21,12 @@ const PostForm = () => {
 
   const newPostMutation = useMutation({
     mutationFn: postsService.createNew,
-    onSuccess: closeForm,
+    onSuccess: (newPost) => {
+      const posts = queryClient.getQueryData(["posts"]);
+      queryClient.setQueryData(["posts"], [...posts, newPost]);
+
+      closeForm();
+    },
   });
 
   const handleSubmit = (event) => {
