@@ -3,7 +3,7 @@ const Post = require("../models/post");
 const middleware = require("../utils/middleware");
 
 postsRouter.get("/", async (req, res) => {
-  const posts = await Post.find({});
+  const posts = await Post.find({}).populate("user", { username: 1, id: 1 });
   res.json(posts);
 });
 
