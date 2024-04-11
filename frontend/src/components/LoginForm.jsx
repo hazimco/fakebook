@@ -1,6 +1,7 @@
 import { useState } from "react";
 import loginService from "../services/login";
 import useNotification from "../hooks/useNotification";
+import postsService from "../services/posts";
 
 const ErrorNotification = ({ message }) => {
   return <div>{message}</div>;
@@ -21,6 +22,7 @@ const LoginForm = ({ setUser }) => {
         password,
       });
       setUser(user);
+      postsService.setToken(user.token);
     } catch (error) {
       setError(error?.response?.data?.error || error.message);
     }
