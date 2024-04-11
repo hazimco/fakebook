@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 const Post = ({ text, createdAt, username }) => {
   const postStyle = {
     container: {
@@ -27,7 +29,9 @@ const Post = ({ text, createdAt, username }) => {
     <div style={postStyle.container}>
       <div style={postStyle.title}>{username}</div>
       <div style={postStyle.text}>{text}</div>
-      <div style={postStyle.createdAt}>{createdAt}</div>
+      <div style={postStyle.createdAt}>
+        {format(createdAt, "HH:mm - MMM dd, yyyy")}
+      </div>
     </div>
   );
 };
