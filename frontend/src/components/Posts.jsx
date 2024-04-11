@@ -23,13 +23,12 @@ const Posts = () => {
         .sort((a, b) => b.createdAt - a.createdAt)
         .map((post) => {
           return (
-            <div key={post.id}>
-              <Post
-                text={post.text}
-                createdAt={post.createdAt}
-                username={post.user.username}
-              />
-            </div>
+            <Post
+              key={post.id}
+              text={post.text}
+              createdAt={post.createdAt}
+              username={post.user.username}
+            />
           );
         })}
     </div>
