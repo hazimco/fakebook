@@ -13,22 +13,25 @@ const Posts = () => {
 
   const posts = query.data;
 
+  const sortedPosts = [...posts].sort((a, b) => b.createdAt - a.createdAt);
+
   return (
     <div>
       {/* currently renders with a "blink" when isPending is true. Need to always render the heading */}
       <h1>Posts</h1>{" "}
-      {posts.map((post) => {
-        console.log("post", post);
-        return (
-          <div key={post.id}>
-            <Post
-              text={post.text}
-              createdAt={post.createdAt}
-              username={post.user.username}
-            />
-          </div>
-        );
-      })}
+      {sortedPosts
+        .sort((a, b) => b.createdAt - a.createdAt)
+        .map((post) => {
+          return (
+            <div key={post.id}>
+              <Post
+                text={post.text}
+                createdAt={post.createdAt}
+                username={post.user.username}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 };
