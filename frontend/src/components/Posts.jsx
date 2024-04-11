@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import postsService from "../services/posts";
 import Post from "./Post";
+import PostForm from "./PostForm";
 
 const Posts = () => {
   const query = useQuery({
@@ -18,7 +19,8 @@ const Posts = () => {
   return (
     <div>
       {/* currently renders with a "blink" when isPending is true. Need to always render the heading */}
-      <h1>Posts</h1>{" "}
+      <h1>Posts</h1>
+      <PostForm />
       {sortedPosts
         .sort((a, b) => b.createdAt - a.createdAt)
         .map((post) => {
