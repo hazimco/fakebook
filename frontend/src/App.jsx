@@ -6,9 +6,15 @@ import Menu from "./components/Menu";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
+import postsService from "./services/posts";
 
 const App = () => {
   const [user, setUser] = useState();
+
+  const handleLogout = () => {
+    setUser();
+    postsService.setToken(null);
+  };
 
   if (!user)
     return (
@@ -20,7 +26,7 @@ const App = () => {
 
   return (
     <div>
-      <Menu />
+      <Menu logout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home username={user.username} />} />
         <Route path="/posts" element={<Posts />} />
