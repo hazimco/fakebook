@@ -12,9 +12,14 @@ const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
+  const closeForm = () => {
+    setShowForm(false);
+    setText("");
+  };
+
   const newPostMutation = useMutation({
     mutationFn: postsService.createNew,
-    onSuccess: () => setShowForm(false),
+    onSuccess: closeForm,
   });
 
   const handleSubmit = (event) => {
@@ -37,7 +42,7 @@ const PostForm = () => {
             />
             <div>
               <button>Done</button>
-              <button onClick={() => setShowForm(false)}>Cancel</button>
+              <button onClick={closeForm}>Cancel</button>
               {140 - text.length} characters left
             </div>
           </div>
