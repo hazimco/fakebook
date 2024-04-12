@@ -2,12 +2,6 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../services/posts";
 
-const postFormStyle = {
-  container: {
-    marginBottom: 20,
-  },
-};
-
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
@@ -38,20 +32,21 @@ const PostForm = () => {
   };
 
   return (
-    <div style={postFormStyle.container}>
+    <div className="create-post">
       {showForm ? (
         <form onSubmit={handleSubmit}>
-          <div>
-            <textarea
-              maxLength={140}
-              value={text}
-              onChange={(event) => setText(event.target.value)}
-            />
-            <div>
+          <input
+            placeholder="Write something..."
+            maxLength={140}
+            value={text}
+            onChange={(event) => setText(event.target.value)}
+          />
+          <div className="bottom-container">
+            <div className="button-group">
               <button>Done</button>
               <button onClick={closeForm}>Cancel</button>
-              {140 - text.length} characters left
             </div>
+            {140 - text.length} characters left
           </div>
         </form>
       ) : (

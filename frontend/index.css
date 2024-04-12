@@ -106,6 +106,37 @@
   font-size: 12px;
 }
 
+.create-post {
+  margin-bottom: 20px;
+}
+
+.create-post form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-post .bottom-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0px;
+}
+
+.create-post .button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.create-post input {
+  font-family: inherit;
+  padding: 10px;
+}
+
+.create-post button {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 6px;
+}
+
 .user {
   display: flex;
   justify-content: space-between;
