@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 
 const Menu = ({ logout }) => {
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/posts">Posts</Link>
-      <Link to="/users">Users</Link>
-      <Link to="/" onClick={logout}>
+    <div className="menu">
+      <Link to="/" className="link">
+        Home
+      </Link>
+      <Link to="/posts" className="link">
+        Posts
+      </Link>
+      <Link to="/users" className="link">
+        Users
+      </Link>
+      <Link to="/" className="link" onClick={logout}>
         Log out
       </Link>
     </div>

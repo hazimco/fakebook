@@ -18,14 +18,14 @@ const App = () => {
 
   if (!user)
     return (
-      <div>
+      <div className="app">
         <h1>Fakebook</h1>
         <LoginForm setUser={setUser} />
       </div>
     );
 
   return (
-    <div>
+    <div className="app">
       <Menu logout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home username={user.username} />} />
