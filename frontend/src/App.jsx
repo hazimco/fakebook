@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import LoginForm from "./components/LoginForm";
 import Menu from "./components/Menu";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
 import postsService from "./services/posts";
+import Login from "./components/Login";
 
 const App = () => {
   const [user, setUser] = useState();
@@ -16,13 +16,13 @@ const App = () => {
     postsService.setToken(null);
   };
 
-  if (!user)
+  if (!user) {
     return (
       <div className="app">
-        <h1>Fakebook</h1>
-        <LoginForm setUser={setUser} />
+        <Login setUser={setUser} />
       </div>
     );
+  }
 
   return (
     <div className="app">

@@ -16,6 +16,53 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+.login {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  border-radius: 6px;
+  background-color: lightblue;
+}
+
+.login form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #c6e8f2;
+}
+
+.login .input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.login .input-container input {
+  border: solid;
+  border-color: #a3a3a3;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+.login button {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 6px;
+  margin: 10px 10px;
+}
+
+.login .error {
+  color: #db0000;
+  text-align: center;
+}
+
 .menu {
   display: flex;
   justify-content: space-evenly;

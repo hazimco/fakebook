@@ -4,7 +4,7 @@ import useNotification from "../hooks/useNotification";
 import postsService from "../services/posts";
 
 const ErrorNotification = ({ message }) => {
-  return <div>{message}</div>;
+  return <div className="error">{message}</div>;
 };
 
 const LoginForm = ({ setUser }) => {
@@ -29,27 +29,25 @@ const LoginForm = ({ setUser }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          Username:{" "}
-          <input
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </div>
-        <div>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button>Log in</button>
-      </form>
+    <form onSubmit={handleLogin}>
+      <div className="input-container">
+        Username:{" "}
+        <input
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
+      </div>
+      <div className="input-container">
+        Password:
+        <input
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      </div>
+      <button>Log in</button>
       {error && <ErrorNotification message={error} />}
-    </div>
+    </form>
   );
 };
 
