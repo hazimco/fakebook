@@ -64,4 +64,38 @@ usersRouter.post("/follow", middleware.addUserToReqObject, async (req, res) => {
   res.json(savedUser);
 });
 
+usersRouter.post(
+  "/unfollow",
+  middleware.addUserToReqObject,
+  async (req, res) => {
+    const { id } = req.body;
+    const { user } = req;
+
+    if (!user.following.includes(id)) {
+      res.status(400).json({ error: "not following this user" });
+      return;
+    }
+
+    const userToUnfollow = await User.findById(id);
+
+    if (!userToUnfollow) {
+      res.status(400).json({ error: "user to unfollow not found" });
+      return;
+    }
+
+    user.following = user.following.filter(
+      (followedUser) => id !== followedUser._id.toString()
+    );
+
+    userToUnfollow.followedBy = userToUnfollow.followedBy.filter(
+      (followedBy) => followedBy.toString() !== user._id.toString()
+    );
+
+    await userToUnfollow.save();
+    const savedUser = await user.save();
+
+    res.json(savedUser);
+  }
+);
+
 module.exports = usersRouter;
