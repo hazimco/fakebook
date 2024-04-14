@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  followedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator);
