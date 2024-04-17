@@ -1,11 +1,6 @@
 import axios from "axios";
+import tokenService from "./token";
 const baseUrl = "/api/posts";
-
-let token = null;
-
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
-};
 
 const getAll = async () => {
   const response = await axios.get(baseUrl);
@@ -14,7 +9,7 @@ const getAll = async () => {
 
 const createNew = async (data) => {
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: tokenService.getToken() },
   };
   const response = await axios.post(baseUrl, data, config);
   return response.data;
@@ -23,5 +18,4 @@ const createNew = async (data) => {
 export default {
   createNew,
   getAll,
-  setToken,
 };

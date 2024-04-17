@@ -5,7 +5,7 @@ import Menu from "./components/Menu";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
-import postsService from "./services/posts";
+import tokenService from "./services/token";
 import Login from "./components/Login";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
 
   const handleLogout = () => {
     setUser();
-    postsService.setToken(null);
+    tokenService.setToken(null);
   };
 
   if (!user) {
