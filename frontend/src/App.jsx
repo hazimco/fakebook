@@ -9,17 +9,17 @@ import tokenService from "./services/token";
 import Login from "./components/Login";
 
 const App = () => {
-  const [user, setUser] = useState();
+  const [loggedInUser, setLoggedInUser] = useState();
 
   const handleLogout = () => {
-    setUser();
+    setLoggedInUser();
     tokenService.setToken(null);
   };
 
-  if (!user) {
+  if (!loggedInUser) {
     return (
       <div className="app">
-        <Login setUser={setUser} />
+        <Login setLoggedInUser={setLoggedInUser} />
       </div>
     );
   }
@@ -28,9 +28,15 @@ const App = () => {
     <div className="app">
       <Menu logout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Home username={user.username} />} />
+        <Route
+          path="/"
+          element={<Home loggedInUsername={loggedInUser.username} />}
+        />
         <Route path="/posts" element={<Posts />} />
-        <Route path="/users" element={<Users />} />
+        <Route
+          path="/users"
+          element={<Users loggedInUsername={loggedInUser.username} />}
+        />
       </Routes>
     </div>
   );

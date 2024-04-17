@@ -1,10 +1,10 @@
 import LoginForm from "./LoginForm";
 
-const Login = ({ setUser }) => {
+const Login = ({ setLoggedInUser }) => {
   return (
     <div className="login">
       <h1>Fakebook</h1>
-      <LoginForm setUser={setUser} />
+      <LoginForm setLoggedInUser={setLoggedInUser} />
     </div>
   );
 };

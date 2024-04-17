@@ -7,7 +7,7 @@ const ErrorNotification = ({ message }) => {
   return <div className="error">{message}</div>;
 };
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setLoggedInUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +21,7 @@ const LoginForm = ({ setUser }) => {
         username,
         password,
       });
-      setUser(user);
+      setLoggedInUser(user);
       tokenService.setToken(user.token);
     } catch (error) {
       setError(error?.response?.data?.error || error.message);

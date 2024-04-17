@@ -1,7 +1,7 @@
-const Home = ({ username }) => {
+const Home = ({ loggedInUsername }) => {
   return (
     <div>
-      <h1>Home of {username}</h1>
+      <h1>Home of {loggedInUsername}</h1>
     </div>
   );
 };
