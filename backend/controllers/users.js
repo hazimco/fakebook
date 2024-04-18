@@ -78,7 +78,7 @@ usersRouter.post(
     const { user } = req;
 
     if (!user.following.includes(id)) {
-      res.status(400).json({ error: "not following this user" });
+      res.status(400).json({ error: "already not following this user" });
       return;
     }
 
