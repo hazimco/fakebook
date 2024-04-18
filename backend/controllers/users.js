@@ -8,6 +8,12 @@ usersRouter.get("/", async (req, res) => {
   res.json(users);
 });
 
+usersRouter.get("/me", middleware.addUserToReqObject, async (req, res) => {
+  const { user } = req;
+
+  res.json(user);
+});
+
 usersRouter.post("/", async (req, res) => {
   const { username, password } = req.body;
 
