@@ -49,7 +49,7 @@ const App = () => {
           <Route path="/posts" element={<Posts />} />
           <Route
             path="/users"
-            element={<Users loggedInUsername={loggedInUser.username} />}
+            element={<Users loggedInUser={loggedInUser} />}
           />
         </Routes>
       )}

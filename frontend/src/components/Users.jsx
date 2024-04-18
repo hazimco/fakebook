@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "../components/User";
 
-const Users = () => {
+const Users = ({ loggedInUser }) => {
   const query = useQuery({ queryKey: ["users"], queryFn: usersService.getAll });
 
   if (query.isPending) return <div>loading</div>;
@@ -18,6 +18,8 @@ const Users = () => {
           key={user.id}
           username={user.username}
           postCount={user.posts.length}
+          id={user.id}
+          loggedInUser={loggedInUser}
         />
       ))}
     </div>
