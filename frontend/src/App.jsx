@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import Menu from "./components/Menu";
 import Home from "./components/Home";
@@ -13,6 +13,8 @@ import usersService from "./services/users";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const query = useQuery({
     queryKey: ["loggedInUser"],
     queryFn: usersService.getLoggedInUser,
@@ -22,6 +24,7 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     tokenService.setToken();
+    queryClient.clear();
   };
 
   const loggedInUser = query.data;
