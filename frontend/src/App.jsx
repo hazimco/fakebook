@@ -9,20 +9,22 @@ import tokenService from "./services/token";
 import Login from "./components/Login";
 
 const App = () => {
-  const [loggedInUser, setLoggedInUser] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogout = () => {
-    setLoggedInUser();
-    tokenService.setToken(null);
+    setIsLoggedIn(false);
+    tokenService.setToken();
   };
 
-  if (!loggedInUser) {
+  if (!isLoggedIn) {
     return (
       <div className="app">
-        <Login setLoggedInUser={setLoggedInUser} />
+        <Login setIsLoggedIn={setIsLoggedIn} />
       </div>
     );
   }
+
+  const loggedInUser = {}; //temporary - so that app doesn't crashgit
 
   return (
     <div className="app">
