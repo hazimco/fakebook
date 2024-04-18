@@ -7,6 +7,14 @@ const getAll = async () => {
   return response.data;
 };
 
+const getLoggedInUser = async () => {
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.get(`${baseUrl}/me`, config);
+  return response.data;
+};
+
 const follow = async (data) => {
   const config = {
     headers: { Authorization: tokenService.getToken() },
@@ -25,6 +33,7 @@ const unfollow = async (data) => {
 
 export default {
   getAll,
+  getLoggedInUser,
   follow,
   unfollow,
 };
