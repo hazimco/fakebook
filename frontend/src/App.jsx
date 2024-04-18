@@ -37,22 +37,22 @@ const App = () => {
     );
   }
 
-  if (!loggedInUser) return;
-
   return (
     <div className="app">
       <Menu logout={handleLogout} />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home loggedInUsername={loggedInUser.username} />}
-        />
-        <Route path="/posts" element={<Posts />} />
-        <Route
-          path="/users"
-          element={<Users loggedInUsername={loggedInUser.username} />}
-        />
-      </Routes>
+      {loggedInUser && (
+        <Routes>
+          <Route
+            path="/"
+            element={<Home loggedInUsername={loggedInUser.username} />}
+          />
+          <Route path="/posts" element={<Posts />} />
+          <Route
+            path="/users"
+            element={<Users loggedInUsername={loggedInUser.username} />}
+          />
+        </Routes>
+      )}
     </div>
   );
 };
