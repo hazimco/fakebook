@@ -1,7 +1,11 @@
 let token = null;
 
 const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
+  if (!newToken) {
+    token = null;
+  } else {
+    token = `Bearer ${newToken}`;
+  }
 };
 
 const getToken = () => {
