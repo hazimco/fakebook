@@ -28,25 +28,13 @@ const Profile = ({ loggedInUser }) => {
         <div>
           <h4>Following:</h4>
           {followingUsers.map((user) => (
-            <User
-              key={user.id}
-              username={user.username}
-              postCount={user.posts.length}
-              id={user.id}
-              loggedInUser={loggedInUser}
-            />
+            <User key={user.id} user={user} loggedInUser={loggedInUser} />
           ))}
         </div>
         <div>
           <h4>Followed by:</h4>
           {followedByUsers.map((user) => (
-            <User
-              key={user.id}
-              username={user.username}
-              postCount={user.posts.length}
-              id={user.id}
-              loggedInUser={loggedInUser}
-            />
+            <User key={user.id} user={user} loggedInUser={loggedInUser} />
           ))}
         </div>
       </div>

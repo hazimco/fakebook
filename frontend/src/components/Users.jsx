@@ -14,13 +14,7 @@ const Users = ({ loggedInUser }) => {
     <div>
       <h1>Users</h1>
       {users.map((user) => (
-        <User
-          key={user.id}
-          username={user.username}
-          postCount={user.posts.length}
-          id={user.id}
-          loggedInUser={loggedInUser}
-        />
+        <User key={user.id} user={user} loggedInUser={loggedInUser} />
       ))}
     </div>
   );
