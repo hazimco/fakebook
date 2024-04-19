@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import Menu from "./components/Menu";
-import Home from "./components/Home";
+import Profile from "./components/Profile";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
 import tokenService from "./services/token";
@@ -44,7 +44,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<Home loggedInUsername={loggedInUser.username} />}
+            element={<Profile loggedInUsername={loggedInUser.username} />}
           />
           <Route path="/posts" element={<Posts />} />
           <Route

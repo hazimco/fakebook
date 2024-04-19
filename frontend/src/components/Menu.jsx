@@ -4,7 +4,7 @@ const Menu = ({ logout }) => {
   return (
     <div className="menu">
       <Link to="/" className="link">
-        Home
+        Profile
       </Link>
       <Link to="/posts" className="link">
         Posts
