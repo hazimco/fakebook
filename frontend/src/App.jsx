@@ -42,10 +42,7 @@ const App = () => {
       <Menu logout={handleLogout} />
       {loggedInUser && (
         <Routes>
-          <Route
-            path="/"
-            element={<Profile loggedInUsername={loggedInUser.username} />}
-          />
+          <Route path="/" element={<Profile loggedInUser={loggedInUser} />} />
           <Route path="/posts" element={<Posts />} />
           <Route
             path="/users"
