@@ -2,7 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usersService from "../services/users";
 
 const User = ({ user, loggedInUser }) => {
-  const { username, postCount, id } = user;
+  const { username, id } = user;
+  const postCount = user.posts.length;
+
   const followedByLoggedInUser = loggedInUser.following.includes(id);
 
   const queryClient = useQueryClient();
