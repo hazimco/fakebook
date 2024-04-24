@@ -161,3 +161,7 @@
 .user .username {
   font-weight: bold;
 }
+
+.user .postCount {
+  font-size: 12px;
+}

@@ -31,8 +31,10 @@ const User = ({ user, loggedInUser }) => {
 
   return (
     <div className="user">
-      <div className="username">{username}</div>
-      <div className="postCount">{postCount} posts</div>
+      <div>
+        <div className="username">{username}</div>
+        <div className="postCount">{postCount} posts</div>
+      </div>
       <div>
         {loggedInUser.id !== id && (
           <button onClick={handleClick}>
