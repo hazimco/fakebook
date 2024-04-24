@@ -25,13 +25,13 @@ const Profile = ({ loggedInUser }) => {
     <div>
       <h1>Profile of {loggedInUser.username}</h1>
       <div className="following-followed">
-        <div>
+        <div className="column">
           <h4>Following:</h4>
           {followingUsers.map((user) => (
             <User key={user.id} user={user} loggedInUser={loggedInUser} />
           ))}
         </div>
-        <div>
+        <div className="column">
           <h4>Followed by:</h4>
           {followedByUsers.map((user) => (
             <User key={user.id} user={user} loggedInUser={loggedInUser} />

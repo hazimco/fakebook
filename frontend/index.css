@@ -86,7 +86,7 @@
   gap: 20px;
 }
 
-.following-followed div {
+.following-followed .column {
   flex: 1;
 }
 
