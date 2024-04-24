@@ -149,6 +149,7 @@
 .user {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: white;
   border: solid;
   border-color: #a3a3a3;
