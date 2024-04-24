@@ -81,6 +81,15 @@
   border-radius: 6px;
 }
 
+.following-followed {
+  display: flex;
+  gap: 20px;
+}
+
+.following-followed div {
+  flex: 1;
+}
+
 .post {
   background-color: white;
   border: solid;

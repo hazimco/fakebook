@@ -24,7 +24,7 @@ const Profile = ({ loggedInUser }) => {
   return (
     <div>
       <h1>Profile of {loggedInUser.username}</h1>
-      <div>
+      <div className="following-followed">
         <div>
           <h4>Following:</h4>
           {followingUsers.map((user) => (
