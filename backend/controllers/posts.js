@@ -8,6 +8,21 @@ postsRouter.get("/", async (req, res) => {
   res.json(posts);
 });
 
+postsRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id).populate({
+    path: "comments",
+    populate: { path: "user", select: "username" },
+  });
+
+  if (!post) {
+    res.status(400).json({ error: "post not found" });
+  }
+
+  res.json(post);
+});
+
 postsRouter.post("/", middleware.addUserToReqObject, async (req, res) => {
   const { text } = req.body;
   const { user } = req;
