@@ -1,5 +1,6 @@
 const postsRouter = require("express").Router();
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 const middleware = require("../utils/middleware");
 
 postsRouter.get("/", async (req, res) => {
@@ -25,5 +26,33 @@ postsRouter.post("/", middleware.addUserToReqObject, async (req, res) => {
 
   res.status(201).json(savedPost);
 });
+
+postsRouter.post(
+  "/comment",
+  middleware.addUserToReqObject,
+  async (req, res) => {
+    const { text, id } = req.body;
+    const { user } = req;
+
+    const post = await Post.findById(id);
+    if (!post) {
+      res.status(400).json({ error: "post not found" });
+      return;
+    }
+
+    const comment = new Comment({
+      text,
+      user: user._id,
+    });
+
+    await comment.save();
+
+    post.comments = [...post.comments, comment._id];
+
+    const savedPost = await post.save();
+
+    res.json(savedPost);
+  }
+);
 
 module.exports = postsRouter;
