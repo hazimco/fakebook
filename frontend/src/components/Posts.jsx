@@ -30,6 +30,7 @@ const Posts = () => {
               text={post.text}
               createdAt={post.createdAt}
               username={post.user.username}
+              id={post.id}
             />
           );
         })}

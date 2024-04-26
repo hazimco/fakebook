@@ -15,7 +15,16 @@ const createNew = async (data) => {
   return response.data;
 };
 
+const addComment = async (data) => {
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.post(`${baseUrl}/comment`, data, config);
+  return response.data;
+};
+
 export default {
   createNew,
   getAll,
+  addComment,
 };
