@@ -8,7 +8,7 @@ const Comments = ({ postId }) => {
   const [showComments, setShowComments] = useState(false);
 
   const query = useQuery({
-    queryKey: ["post-comments"],
+    queryKey: ["post-comments", postId],
     queryFn: () => postsService.getComments(postId),
     enabled: showComments,
   });
