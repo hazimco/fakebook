@@ -22,7 +22,17 @@ const CommentForm = ({ postId }) => {
           ["post-comments", postId],
           [...comments, newComment]
         );
+      } else {
+        //updating "posts" query so the "show comments" button is displayed for the post
+        const posts = queryClient.getQueryData(["posts"]);
+        const updatedPosts = posts.map((post) =>
+          post.id !== postId
+            ? post
+            : { ...post, comments: [...post.comments, newComment] }
+        );
+        queryClient.setQueryData(["posts"], updatedPosts);
       }
+
       closeForm();
     },
   });
