@@ -17,10 +17,12 @@ const CommentForm = ({ postId }) => {
     mutationFn: postsService.addComment,
     onSuccess: (newComment) => {
       const comments = queryClient.getQueryData(["post-comments", postId]);
-      queryClient.setQueryData(
-        ["post-comments", postId],
-        [...comments, newComment]
-      );
+      if (comments) {
+        queryClient.setQueryData(
+          ["post-comments", postId],
+          [...comments, newComment]
+        );
+      }
       closeForm();
     },
   });
