@@ -28,6 +28,7 @@ const Posts = () => {
             text={post.text}
             createdAt={post.createdAt}
             username={post.user.username}
+            commentsAvailable={post.comments.length > 0}
             id={post.id}
           />
         );
