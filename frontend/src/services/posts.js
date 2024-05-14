@@ -7,6 +7,11 @@ const getAll = async () => {
   return response.data;
 };
 
+const get = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 const createNew = async (data) => {
   const config = {
     headers: { Authorization: tokenService.getToken() },
@@ -26,5 +31,6 @@ const addComment = async (data) => {
 export default {
   createNew,
   getAll,
+  get,
   addComment,
 };
