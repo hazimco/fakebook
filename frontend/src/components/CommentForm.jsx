@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../services/posts";
 
 const CommentForm = ({ postId }) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
+
+  const queryClient = useQueryClient();
 
   const closeForm = () => {
     setShowForm(false);
@@ -13,7 +15,9 @@ const CommentForm = ({ postId }) => {
 
   const addCommentMutation = useMutation({
     mutationFn: postsService.addComment,
-    onSuccess: () => {
+    onSuccess: (newComment) => {
+      const comments = queryClient.getQueryData(["post-comments"]);
+      queryClient.setQueryData(["post-comments"], [...comments, newComment]);
       closeForm();
     },
   });
