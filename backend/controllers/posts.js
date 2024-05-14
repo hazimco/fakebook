@@ -76,13 +76,13 @@ postsRouter.post(
       post: post._id,
     });
 
-    await comment.save();
+    const savedComment = await comment.save();
 
     post.comments = [...post.comments, comment._id];
 
-    const savedPost = await post.save();
+    await post.save();
 
-    res.json(savedPost);
+    res.json(savedComment);
   }
 );
 
