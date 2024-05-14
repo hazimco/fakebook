@@ -8,12 +8,12 @@ const Comments = ({ postId }) => {
   const [showComments, setShowComments] = useState(false);
 
   const query = useQuery({
-    queryKey: ["single-post"],
-    queryFn: () => postsService.get(postId),
+    queryKey: ["post-comments"],
+    queryFn: () => postsService.getComments(postId),
     enabled: showComments,
   });
 
-  const comments = query.data?.comments || [];
+  const comments = query.data || [];
 
   const sortedComments = [...comments].sort(
     (a, b) => b.createdAt - a.createdAt
