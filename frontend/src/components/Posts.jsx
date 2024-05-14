@@ -18,22 +18,20 @@ const Posts = () => {
 
   return (
     <div>
-      {/* currently renders with a "blink" when isPending is true. Need to always render the heading */}
+      {/* todo: currently renders with a "blink" when isPending is true. Need to always render the heading */}
       <h1>Posts</h1>
       <PostForm />
-      {sortedPosts
-        .sort((a, b) => b.createdAt - a.createdAt)
-        .map((post) => {
-          return (
-            <Post
-              key={post.id}
-              text={post.text}
-              createdAt={post.createdAt}
-              username={post.user.username}
-              id={post.id}
-            />
-          );
-        })}
+      {sortedPosts.map((post) => {
+        return (
+          <Post
+            key={post.id}
+            text={post.text}
+            createdAt={post.createdAt}
+            username={post.user.username}
+            id={post.id}
+          />
+        );
+      })}
     </div>
   );
 };
