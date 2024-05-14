@@ -76,6 +76,8 @@ postsRouter.post(
       post: post._id,
     });
 
+    await comment.populate("user", { username: 1 });
+
     const savedComment = await comment.save();
 
     post.comments = [...post.comments, comment._id];
