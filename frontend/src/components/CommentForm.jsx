@@ -16,8 +16,11 @@ const CommentForm = ({ postId }) => {
   const addCommentMutation = useMutation({
     mutationFn: postsService.addComment,
     onSuccess: (newComment) => {
-      const comments = queryClient.getQueryData(["post-comments"]);
-      queryClient.setQueryData(["post-comments"], [...comments, newComment]);
+      const comments = queryClient.getQueryData(["post-comments", postId]);
+      queryClient.setQueryData(
+        ["post-comments", postId],
+        [...comments, newComment]
+      );
       closeForm();
     },
   });
