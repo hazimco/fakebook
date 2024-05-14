@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
-import User from "../components/User";
+import User from "./User";
 
 const Users = ({ loggedInUser }) => {
   const query = useQuery({ queryKey: ["users"], queryFn: usersService.getAll });

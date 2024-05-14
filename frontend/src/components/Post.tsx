@@ -1,6 +1,6 @@
 import { format } from "date-fns";
-import CommentForm from "../components/CommentForm";
-import Comments from "../components/Comments";
+import CommentForm from "./CommentForm";
+import Comments from "./Comments";
 
 const Post = ({ text, createdAt, username, commentsAvailable, id }) => {
   return (
