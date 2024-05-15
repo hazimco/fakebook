@@ -8,15 +8,10 @@ interface Props {
 
 const Comment = ({ text, createdAt, username }: Props) => {
   return (
-    <div
-      className="post"
-      style={{ backgroundColor: "rgb(255, 255, 230)", marginLeft: 100 }}
-    >
-      <div className="username">{username}</div>
-      <div className="text">{text}</div>
-      <div className="createdAt">
-        {format(createdAt, "HH:mm - MMM dd, yyyy")}
-      </div>
+    <div style={{ backgroundColor: "rgb(255, 255, 230)", marginLeft: 100 }}>
+      <div>{username}</div>
+      <div>{text}</div>
+      <div>{format(createdAt, "HH:mm - MMM dd, yyyy")}</div>
     </div>
   );
 };

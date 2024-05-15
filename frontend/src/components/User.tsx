@@ -37,10 +37,10 @@ const User = ({ user, loggedInUser }: Props) => {
   };
 
   return (
-    <div className="user">
+    <div>
       <div>
-        <div className="username">{username}</div>
-        <div className="postCount">{postCount} posts</div>
+        <div>{username}</div>
+        <div>{postCount} posts</div>
       </div>
       <div>
         {loggedInUser.id !== id && (

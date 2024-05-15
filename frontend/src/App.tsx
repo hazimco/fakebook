@@ -31,14 +31,14 @@ const App = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="app">
+      <div>
         <Login setIsLoggedIn={setIsLoggedIn} />
       </div>
     );
   }
 
   return (
-    <div className="app">
+    <div>
       <Menu logout={handleLogout} />
       {loggedInUser && (
         <Routes>

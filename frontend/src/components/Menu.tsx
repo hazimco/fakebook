@@ -6,17 +6,11 @@ interface Props {
 
 const Menu = ({ logout }: Props) => {
   return (
-    <div className="menu">
-      <Link to="/" className="link">
-        Profile
-      </Link>
-      <Link to="/posts" className="link">
-        Posts
-      </Link>
-      <Link to="/users" className="link">
-        Users
-      </Link>
-      <Link to="/" className="link" onClick={logout}>
+    <div>
+      <Link to="/">Profile</Link>
+      <Link to="/posts">Posts</Link>
+      <Link to="/users">Users</Link>
+      <Link to="/" onClick={logout}>
         Log out
       </Link>
     </div>

@@ -31,7 +31,7 @@ const PostForm = () => {
   };
 
   return (
-    <div className="create-post">
+    <div>
       {showForm ? (
         <form onSubmit={handleSubmit}>
           <input
@@ -40,8 +40,8 @@ const PostForm = () => {
             value={text}
             onChange={(event) => setText(event.target.value)}
           />
-          <div className="bottom-container">
-            <div className="button-group">
+          <div>
+            <div>
               <button>Done</button>
               <button onClick={closeForm}>Cancel</button>
             </div>

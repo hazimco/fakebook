@@ -13,12 +13,10 @@ interface Props {
 const Post = ({ text, createdAt, username, commentsAvailable, id }: Props) => {
   return (
     <>
-      <div className="post">
-        <div className="username">{username}</div>
-        <div className="text">{text}</div>
-        <div className="createdAt">
-          {format(createdAt, "HH:mm - MMM dd, yyyy")}
-        </div>
+      <div>
+        <div>{username}</div>
+        <div>{text}</div>
+        <div>{format(createdAt, "HH:mm - MMM dd, yyyy")}</div>
         <CommentForm postId={id} />
       </div>
       {commentsAvailable && <Comments postId={id} />}

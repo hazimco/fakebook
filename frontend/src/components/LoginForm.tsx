@@ -9,7 +9,7 @@ interface ErrorNotificationProps {
 }
 
 const ErrorNotification = ({ message }: ErrorNotificationProps) => {
-  return <div className="error">{message}</div>;
+  return <div>{message}</div>;
 };
 
 interface LoginFormProps {
@@ -43,14 +43,14 @@ const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
 
   return (
     <form onSubmit={handleLogin}>
-      <div className="input-container">
+      <div>
         Username:{" "}
         <input
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
-      <div className="input-container">
+      <div>
         Password:
         <input
           type="password"

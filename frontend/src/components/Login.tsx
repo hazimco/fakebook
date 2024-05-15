@@ -6,7 +6,7 @@ interface Props {
 
 const Login = ({ setIsLoggedIn }: Props) => {
   return (
-    <div className="login">
+    <div>
       <h1>Fakebook</h1>
       <LoginForm setIsLoggedIn={setIsLoggedIn} />
     </div>
