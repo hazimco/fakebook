@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
-const useNotification = () => {
+const useNotification = (): [
+  string,
+  React.Dispatch<SetStateAction<string>>
+] => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {

@@ -23,7 +23,7 @@ const App = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    tokenService.setToken();
+    tokenService.setToken(null);
     queryClient.clear();
   };
 

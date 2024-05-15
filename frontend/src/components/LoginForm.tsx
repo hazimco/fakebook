@@ -2,18 +2,27 @@ import { useState } from "react";
 import loginService from "../services/login";
 import useNotification from "../hooks/useNotification";
 import tokenService from "../services/token";
+import axios from "axios";
 
-const ErrorNotification = ({ message }) => {
+interface ErrorNotificationProps {
+  message: string;
+}
+
+const ErrorNotification = ({ message }: ErrorNotificationProps) => {
   return <div className="error">{message}</div>;
 };
 
-const LoginForm = ({ setIsLoggedIn }) => {
+interface LoginFormProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useNotification();
 
-  const handleLogin = async (event) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -23,8 +32,12 @@ const LoginForm = ({ setIsLoggedIn }) => {
       });
       setIsLoggedIn(true);
       tokenService.setToken(user.token);
-    } catch (error) {
-      setError(error?.response?.data?.error || error.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.error || error.message);
+      } else {
+        setError("Unknown error: " + error);
+      }
     }
   };
 

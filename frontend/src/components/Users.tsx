@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./User";
+import { User as UserType } from "../types/types";
 
-const Users = ({ loggedInUser }) => {
+interface Props {
+  loggedInUser: UserType;
+}
+
+const Users = ({ loggedInUser }: Props) => {
   const query = useQuery({ queryKey: ["users"], queryFn: usersService.getAll });
 
   if (query.isPending) return <div>loading</div>;

@@ -2,7 +2,15 @@ import { format } from "date-fns";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 
-const Post = ({ text, createdAt, username, commentsAvailable, id }) => {
+interface Props {
+  text: string;
+  createdAt: number;
+  username: string;
+  commentsAvailable: boolean;
+  id: string;
+}
+
+const Post = ({ text, createdAt, username, commentsAvailable, id }: Props) => {
   return (
     <>
       <div className="post">

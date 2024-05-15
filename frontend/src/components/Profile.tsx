@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./User";
+import { User as UserType } from "../types/types";
 
-const Profile = ({ loggedInUser }) => {
+interface Props {
+  loggedInUser: UserType;
+}
+
+const Profile = ({ loggedInUser }: Props) => {
   const query = useQuery({ queryKey: ["users"], queryFn: usersService.getAll });
 
   const users = query.data;
 
   if (!users) return;
 
-  const followingUsers = [];
-  const followedByUsers = [];
+  const followingUsers: UserType[] = [];
+  const followedByUsers: UserType[] = [];
 
   users.forEach((user) => {
     if (loggedInUser.following.includes(user.id)) {

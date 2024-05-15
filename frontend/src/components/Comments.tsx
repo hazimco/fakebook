@@ -4,7 +4,11 @@ import postsService from "../services/posts";
 
 import Comment from "./Comment";
 
-const Comments = ({ postId }) => {
+interface Props {
+  postId: string;
+}
+
+const Comments = ({ postId }: Props) => {
   const [showComments, setShowComments] = useState(false);
 
   const query = useQuery({

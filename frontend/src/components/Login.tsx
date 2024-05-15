@@ -1,6 +1,10 @@
 import LoginForm from "./LoginForm";
 
-const Login = ({ setIsLoggedIn }) => {
+interface Props {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login = ({ setIsLoggedIn }: Props) => {
   return (
     <div className="login">
       <h1>Fakebook</h1>

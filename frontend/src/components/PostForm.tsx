@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../services/posts";
+import { Post } from "../types/types";
 
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
@@ -16,19 +17,17 @@ const PostForm = () => {
   const newPostMutation = useMutation({
     mutationFn: postsService.createNew,
     onSuccess: (newPost) => {
-      const posts = queryClient.getQueryData(["posts"]);
+      const posts = queryClient.getQueryData<Post[]>(["posts"]) || [];
       queryClient.setQueryData(["posts"], [...posts, newPost]);
 
       closeForm();
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    newPostMutation.mutate({
-      text,
-    });
+    newPostMutation.mutate(text);
   };
 
   return (

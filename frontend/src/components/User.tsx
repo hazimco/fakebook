@@ -1,7 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usersService from "../services/users";
 
-const User = ({ user, loggedInUser }) => {
+import { User as UserType } from "../types/types";
+
+interface Props {
+  user: UserType;
+  loggedInUser: UserType;
+}
+
+const User = ({ user, loggedInUser }: Props) => {
   const { username, id } = user;
   const postCount = user.posts.length;
 
@@ -25,8 +32,8 @@ const User = ({ user, loggedInUser }) => {
 
   const handleClick = () => {
     followedByLoggedInUser
-      ? unfollowMutation.mutate({ id })
-      : followMutation.mutate({ id });
+      ? unfollowMutation.mutate(id)
+      : followMutation.mutate(id);
   };
 
   return (

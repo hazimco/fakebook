@@ -1,6 +1,6 @@
-let token = null;
+let token: string | null = null;
 
-const setToken = (newToken) => {
+const setToken = (newToken: string | null) => {
   if (!newToken) {
     token = null;
   } else {

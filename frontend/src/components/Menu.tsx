@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-const Menu = ({ logout }) => {
+interface Props {
+  logout: () => void;
+}
+
+const Menu = ({ logout }: Props) => {
   return (
     <div className="menu">
       <Link to="/" className="link">

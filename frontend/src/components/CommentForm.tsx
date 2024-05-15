@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../services/posts";
+import { Comment, Post } from "../types/types";
 
-const CommentForm = ({ postId }) => {
+interface Props {
+  postId: string;
+}
+
+const CommentForm = ({ postId }: Props) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
@@ -16,7 +21,10 @@ const CommentForm = ({ postId }) => {
   const addCommentMutation = useMutation({
     mutationFn: postsService.addComment,
     onSuccess: (newComment) => {
-      const comments = queryClient.getQueryData(["post-comments", postId]);
+      const comments = queryClient.getQueryData<Comment[]>([
+        "post-comments",
+        postId,
+      ]);
       if (comments) {
         queryClient.setQueryData(
           ["post-comments", postId],
@@ -24,7 +32,7 @@ const CommentForm = ({ postId }) => {
         );
       } else {
         //updating "posts" query so the "show comments" button is displayed for the post
-        const posts = queryClient.getQueryData(["posts"]);
+        const posts = queryClient.getQueryData<Post[]>(["posts"]) || []; // "|| []" is to silence typescript - logically, if you have just added a comment to a post, then there needs to be at least one post returned by getQueryData
         const updatedPosts = posts.map((post) =>
           post.id !== postId
             ? post
@@ -37,7 +45,7 @@ const CommentForm = ({ postId }) => {
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     addCommentMutation.mutate({ text, id: postId });
