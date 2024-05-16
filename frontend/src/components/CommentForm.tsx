@@ -5,10 +5,10 @@ import { Comment, Post } from "../types/types";
 
 interface Props {
   postId: string;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CommentForm = ({ postId }: Props) => {
-  const [showForm, setShowForm] = useState(false);
+const CommentForm = ({ postId, setShowForm }: Props) => {
   const [text, setText] = useState("");
 
   const queryClient = useQueryClient();
@@ -52,30 +52,19 @@ const CommentForm = ({ postId }: Props) => {
   };
 
   return (
-    <div>
-      {showForm ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder="Comment..."
-            maxLength={140}
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-          />
-          <div>
-            <button>Done</button>
-            <button onClick={closeForm}>Cancel</button>
-            {140 - text.length} characters left
-          </div>
-        </form>
-      ) : (
-        <button
-          onClick={() => setShowForm(true)}
-          className="bg-slate-300 py-1 px-2 rounded-md hover:bg-slate-200 active:bg-slate-400"
-        >
-          Add comment
-        </button>
-      )}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        placeholder="Comment..."
+        maxLength={140}
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+      />
+      <div>
+        <button>Done</button>
+        <button onClick={closeForm}>Cancel</button>
+        {140 - text.length} characters left
+      </div>
+    </form>
   );
 };
 

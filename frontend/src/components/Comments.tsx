@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import postsService from "../services/posts";
 
@@ -6,11 +5,10 @@ import Comment from "./Comment";
 
 interface Props {
   postId: string;
+  showComments: boolean;
 }
 
-const Comments = ({ postId }: Props) => {
-  const [showComments, setShowComments] = useState(false);
-
+const Comments = ({ postId, showComments }: Props) => {
   const query = useQuery({
     queryKey: ["post-comments", postId],
     queryFn: () => postsService.getComments(postId),
@@ -25,22 +23,16 @@ const Comments = ({ postId }: Props) => {
 
   return (
     <div>
-      {showComments ? (
-        <div>
-          {sortedComments.map((comment) => {
-            return (
-              <Comment
-                key={comment.id}
-                text={comment.text}
-                createdAt={comment.createdAt}
-                username={comment.user.username}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <button onClick={() => setShowComments(true)}>Show comments</button>
-      )}
+      {sortedComments.map((comment) => {
+        return (
+          <Comment
+            key={comment.id}
+            text={comment.text}
+            createdAt={comment.createdAt}
+            username={comment.user.username}
+          />
+        );
+      })}
     </div>
   );
 };
