@@ -68,7 +68,12 @@ const CommentForm = ({ postId }: Props) => {
           </div>
         </form>
       ) : (
-        <button onClick={() => setShowForm(true)}>Comment</button>
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-slate-300 py-1 px-2 rounded-md hover:bg-slate-200 active:bg-slate-400"
+        >
+          Add comment
+        </button>
       )}
     </div>
   );

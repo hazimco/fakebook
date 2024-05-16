@@ -19,7 +19,7 @@ const Posts = () => {
   return (
     <div>
       {/* todo: currently renders with a "blink" when isPending is true. Need to always render the heading */}
-      <h1>Posts</h1>
+      <h1 className="font-medium text-2xl">Posts</h1>
       <PostForm />
       {sortedPosts.map((post) => {
         return (
