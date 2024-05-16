@@ -30,11 +30,7 @@ const App = () => {
   const loggedInUser = query.data;
 
   if (!isLoggedIn) {
-    return (
-      <div>
-        <Login setIsLoggedIn={setIsLoggedIn} />
-      </div>
-    );
+    return <Login setIsLoggedIn={setIsLoggedIn} />;
   }
 
   return (
