@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
 interface Props {
   logout: () => void;
@@ -6,14 +6,25 @@ interface Props {
 
 const Menu = ({ logout }: Props) => {
   return (
-    <div>
-      <Link to="/">Profile</Link>
-      <Link to="/posts">Posts</Link>
-      <Link to="/users">Users</Link>
-      <Link to="/" onClick={logout}>
+    <div className="bg-blue-500 font-medium text-gray-100 rounded-md p-1 flex gap-4 justify-evenly">
+      <StyledLink to="/">Profile</StyledLink>
+      <StyledLink to="/posts">Posts</StyledLink>
+      <StyledLink to="/users">Users</StyledLink>
+      <StyledLink to="/" onClick={logout}>
         Log out
-      </Link>
+      </StyledLink>
     </div>
+  );
+};
+
+const StyledLink = (props: LinkProps) => {
+  return (
+    <Link
+      {...props}
+      className="p-1 rounded-md hover:bg-blue-400 active:bg-blue-600"
+    >
+      {props.children}
+    </Link>
   );
 };
 
