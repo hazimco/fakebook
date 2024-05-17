@@ -49,7 +49,7 @@ const StyledPostButton = (
   return (
     <button
       {...props}
-      className="bg-slate-300 py-1 px-2 rounded-md hover:bg-slate-200 active:bg-slate-400"
+      className="bg-slate-300 py-1 px-2 rounded-md hover:bg-slate-200 active:bg-slate-400 self-start"
     ></button>
   );
 };
