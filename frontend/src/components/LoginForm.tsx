@@ -67,7 +67,7 @@ const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 active:bg- font-semibold rounded-md p-1.5 mt-3">
+      <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3">
         Log in
       </button>
       {error && <ErrorNotification message={error} />}
