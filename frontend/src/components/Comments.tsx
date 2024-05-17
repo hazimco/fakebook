@@ -22,7 +22,7 @@ const Comments = ({ postId, showComments }: Props) => {
   );
 
   return (
-    <div>
+    <div className="ml-28 flex flex-col gap-1">
       {sortedComments.map((comment) => {
         return (
           <Comment
