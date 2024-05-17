@@ -31,25 +31,38 @@ const PostForm = () => {
   };
 
   return (
-    <div>
+    <div className="mb-5 text-sm">
       {showForm ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <input
             placeholder="Write something..."
             maxLength={140}
             value={text}
             onChange={(event) => setText(event.target.value)}
+            className="py-1.5 px-2 border-blue-400 border rounded-md"
           />
-          <div>
-            <div>
-              <button>Done</button>
-              <button onClick={closeForm}>Cancel</button>
+          <div className="flex gap-2">
+            <div className="flex gap-2">
+              <button className="bg-green-300 hover:bg-green-200 active:bg-green-400 py-1 px-3 rounded-md">
+                Add comment
+              </button>
+              <button
+                onClick={closeForm}
+                className="bg-red-500 hover:bg-red-400 active:bg-red-600 py-1 px-3 rounded-md text-white"
+              >
+                Cancel
+              </button>
             </div>
-            {140 - text.length} characters left
+            <div className="self-end">{140 - text.length} characters left</div>
           </div>
         </form>
       ) : (
-        <button onClick={() => setShowForm(true)}>Create new post</button>
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-medium rounded-md p-1.5"
+        >
+          Create new post
+        </button>
       )}
     </div>
   );
