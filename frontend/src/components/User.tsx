@@ -37,18 +37,19 @@ const User = ({ user, loggedInUser }: Props) => {
   };
 
   return (
-    <div>
-      <div>
-        <div>{username}</div>
-        <div>{postCount} posts</div>
+    <div className="border-slate-300 border bg-white rounded-md py-2 px-4 mb-2 flex justify-between text-sm">
+      <div className="max-w-52">
+        <div className="font-semibold [word-break:break-word]">{username}</div>
+        <div className="italic font-light">{postCount} posts</div>
       </div>
-      <div>
-        {loggedInUser.id !== id && (
-          <button onClick={handleClick}>
-            {followedByLoggedInUser ? "Unfollow" : "Follow"}
-          </button>
-        )}
-      </div>
+      {loggedInUser.id !== id && (
+        <button
+          onClick={handleClick}
+          className="bg-slate-200 hover:bg-slate-100 active:bg-slate-300 rounded-md ml-6 py-1 px-2 self-center"
+        >
+          {followedByLoggedInUser ? "Unfollow" : "Follow"}
+        </button>
+      )}
     </div>
   );
 };

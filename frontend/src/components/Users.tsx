@@ -17,7 +17,7 @@ const Users = ({ loggedInUser }: Props) => {
 
   return (
     <div>
-      <h1>Users</h1>
+      <h1 className="font-medium text-2xl mb-4">Users</h1>
       {users.map((user) => (
         <User key={user.id} user={user} loggedInUser={loggedInUser} />
       ))}
