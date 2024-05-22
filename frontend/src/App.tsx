@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Menu from "./components/Menu";
 import Profile from "./pages/Profile";
 import Posts from "./pages/Posts";
-import Users from "./components/Users";
+import Users from "./pages/Users";
 import tokenService from "./services/token";
 import Login from "./components/Login";
 import usersService from "./services/users";

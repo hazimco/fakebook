@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import usersService from "../services/users";
+import usersService from "../../services/users";
 
-import { User as UserType } from "../types/types";
+import { User as UserType } from "../../types/types";
 
 interface Props {
   user: UserType;
