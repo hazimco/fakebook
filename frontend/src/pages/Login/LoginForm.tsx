@@ -1,7 +1,7 @@
 import { useState } from "react";
-import loginService from "../services/login";
-import useNotification from "../hooks/useNotification";
-import tokenService from "../services/token";
+import loginService from "../../services/login";
+import useNotification from "../../hooks/useNotification";
+import tokenService from "../../services/token";
 import axios from "axios";
 
 interface ErrorNotificationProps {

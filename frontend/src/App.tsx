@@ -3,11 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import Menu from "./components/Menu";
+import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Posts from "./pages/Posts";
 import Users from "./pages/Users";
 import tokenService from "./services/token";
-import Login from "./components/Login";
 import usersService from "./services/users";
 
 const App = () => {
