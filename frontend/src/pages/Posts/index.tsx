@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import postsService from "../services/posts";
+import postsService from "../../services/posts";
 import Post from "./Post";
 import PostForm from "./PostForm";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import postsService from "../services/posts";
-import { Post } from "../types/types";
+import postsService from "../../services/posts";
+import { Post } from "../../types/types";
 
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);

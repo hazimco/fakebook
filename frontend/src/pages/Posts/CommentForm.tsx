@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import postsService from "../services/posts";
-import { Comment, Post } from "../types/types";
+import postsService from "../../services/posts";
+import { Comment, Post } from "../../types/types";
 
 interface Props {
   postId: string;
