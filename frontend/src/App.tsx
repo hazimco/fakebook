@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import Menu from "./components/Menu";
-import Profile from "./components/Profile";
+import Profile from "./pages/Profile";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
 import tokenService from "./services/token";

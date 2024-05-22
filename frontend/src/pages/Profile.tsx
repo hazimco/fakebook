@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
-import User from "./User";
+import User from "../components/User";
 import { User as UserType } from "../types/types";
 
 interface Props {
