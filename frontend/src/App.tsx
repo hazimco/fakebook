@@ -9,6 +9,7 @@ import Posts from "./pages/Posts";
 import Users from "./pages/Users";
 import tokenService from "./services/token";
 import usersService from "./services/users";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,7 +31,12 @@ const App = () => {
   const loggedInUser = query.data;
 
   if (!isLoggedIn) {
-    return <Login setIsLoggedIn={setIsLoggedIn} />;
+    return (
+      <Routes>
+        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/sign-up" element={<SignUp />} />
+      </Routes>
+    );
   }
 
   return (
