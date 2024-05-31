@@ -4,7 +4,7 @@ import User from "./Users/User";
 import { User as UserType } from "../types/types";
 
 interface Props {
-  loggedInUser: UserType;
+  loggedInUser?: UserType;
 }
 
 const Profile = ({ loggedInUser }: Props) => {
@@ -12,7 +12,7 @@ const Profile = ({ loggedInUser }: Props) => {
 
   const users = query.data;
 
-  if (!users) return;
+  if (!users || !loggedInUser) return;
 
   const followingUsers: UserType[] = [];
   const followedByUsers: UserType[] = [];

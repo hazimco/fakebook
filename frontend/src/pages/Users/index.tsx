@@ -4,7 +4,7 @@ import User from "./User";
 import { User as UserType } from "../../types/types";
 
 interface Props {
-  loggedInUser: UserType;
+  loggedInUser?: UserType;
 }
 
 const Users = ({ loggedInUser }: Props) => {
@@ -12,6 +12,7 @@ const Users = ({ loggedInUser }: Props) => {
 
   if (query.isPending) return <div>loading</div>;
   if (query.isError) return <div>could not fetch users</div>;
+  if (!loggedInUser) return;
 
   const users = query.data;
 
