@@ -3,6 +3,7 @@ import loginService from "../../services/login";
 import useNotification from "../../hooks/useNotification";
 import tokenService from "../../services/token";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface ErrorNotificationProps {
   message: string;
@@ -31,6 +32,8 @@ const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
 
   const [error, setError] = useNotification();
 
+  const navigate = useNavigate();
+
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -41,6 +44,7 @@ const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
       });
       setIsLoggedIn(true);
       tokenService.setToken(user.token);
+      navigate("/");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data.error || error.message);
