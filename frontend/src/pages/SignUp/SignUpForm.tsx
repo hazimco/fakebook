@@ -9,10 +9,18 @@ const StyledInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
   );
 };
 
+const initialFormState = {
+  username: "",
+  password: "",
+  repeatPassword: "",
+};
+
 const SignUpForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [form, setForm] = useState(initialFormState);
+
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,24 +31,27 @@ const SignUpForm = () => {
       <div className="flex flex-col">
         <h2>Username</h2>
         <StyledInput
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          name="username"
+          value={form.username}
+          onChange={handleFormChange}
         />
       </div>
       <div className="flex flex-col">
         <h2>Password</h2>
         <StyledInput
+          name="password"
           type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          value={form.password}
+          onChange={handleFormChange}
         />
       </div>
       <div className="flex flex-col">
         <h2>Repeat Password</h2>
         <StyledInput
+          name="repeatPassword"
           type="password"
-          value={repeatPassword}
-          onChange={(event) => setRepeatPassword(event.target.value)}
+          value={form.repeatPassword}
+          onChange={handleFormChange}
         />
       </div>
       <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3">
