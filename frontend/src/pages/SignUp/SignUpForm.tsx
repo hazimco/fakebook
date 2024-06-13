@@ -120,7 +120,11 @@ const SignUpForm = () => {
         errorMessage={form.repeatPassword.value ? errors.repeatPassword : ""}
         onBlur={handleBlur}
       />
-      <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3">
+
+      <button
+        disabled={Object.values(errors).some((value) => value !== "")}
+        className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3 disabled:bg-slate-200 disabled:text-slate-400"
+      >
         Sign up
       </button>
     </form>
