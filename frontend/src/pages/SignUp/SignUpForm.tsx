@@ -38,12 +38,12 @@ const SignUpForm = () => {
 
   const validation = {
     username: {
-      isValid: (value: string) => !!value,
-      message: "Username is required",
+      isValid: (value: string) => value.length >= 3 && value.length <= 20,
+      message: "Username must be 3-20 characters long",
     },
     password: {
-      isValid: (value: string) => !!value,
-      message: "Password is required",
+      isValid: (value: string) => value.length >= 3,
+      message: "Password must be at least 3 characters long",
     },
     repeatPassword: {
       isValid: (value: string) => value === form.password.value,
