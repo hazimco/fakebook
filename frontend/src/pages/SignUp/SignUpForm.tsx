@@ -66,6 +66,18 @@ const SignUpForm = () => {
     event.preventDefault();
   };
 
+  const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = event.target;
+    const nameWithNarrowedType = name as keyof typeof form;
+    setForm({
+      ...form,
+      [name]: {
+        ...form[nameWithNarrowedType],
+        touched: true,
+      },
+    });
+  };
+
   const errors = Object.keys(form).reduce((result, key) => {
     if (!(key in validation)) return result;
 
@@ -87,7 +99,8 @@ const SignUpForm = () => {
         value={form.username.value}
         onChange={handleFormChange}
         heading="Username"
-        errorMessage={errors.username}
+        errorMessage={form.username.touched ? errors.username : ""}
+        onBlur={handleBlur}
       />
       <FormInput
         name="password"
@@ -95,7 +108,8 @@ const SignUpForm = () => {
         value={form.password.value}
         onChange={handleFormChange}
         heading="Password"
-        errorMessage={errors.password}
+        errorMessage={form.password.touched ? errors.password : ""}
+        onBlur={handleBlur}
       />
       <FormInput
         name="repeatPassword"
@@ -103,7 +117,8 @@ const SignUpForm = () => {
         value={form.repeatPassword.value}
         onChange={handleFormChange}
         heading="Repeat Password"
-        errorMessage={errors.repeatPassword}
+        errorMessage={form.repeatPassword.touched ? errors.repeatPassword : ""}
+        onBlur={handleBlur}
       />
       <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3">
         Sign up
