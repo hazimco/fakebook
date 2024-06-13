@@ -19,9 +19,18 @@ const FormInput = ({ heading, errorMessage, ...props }: FormInputProps) => {
 };
 
 const initialFormState = {
-  username: "",
-  password: "",
-  repeatPassword: "",
+  username: {
+    value: "",
+    touched: false,
+  },
+  password: {
+    value: "",
+    touched: false,
+  },
+  repeatPassword: {
+    value: "",
+    touched: false,
+  },
 };
 
 const SignUpForm = () => {
@@ -37,13 +46,20 @@ const SignUpForm = () => {
       message: "Password is required",
     },
     repeatPassword: {
-      isValid: (value: string) => value === form.password,
+      isValid: (value: string) => value === form.password.value,
       message: "Passwords do not match",
     },
   };
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setForm({
+      ...form,
+      [name]: {
+        ...form[name as keyof typeof form],
+        value,
+      },
+    });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,7 +72,7 @@ const SignUpForm = () => {
     const keyWithNarrowedType = key as keyof typeof validation; //manually narrowing type of key since accessing validation[key] gives error
 
     const message = !validation[keyWithNarrowedType].isValid(
-      form[keyWithNarrowedType]
+      form[keyWithNarrowedType].value
     )
       ? validation[keyWithNarrowedType].message
       : "";
@@ -68,7 +84,7 @@ const SignUpForm = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
       <FormInput
         name="username"
-        value={form.username}
+        value={form.username.value}
         onChange={handleFormChange}
         heading="Username"
         errorMessage={errors.username}
@@ -76,7 +92,7 @@ const SignUpForm = () => {
       <FormInput
         name="password"
         type="password"
-        value={form.password}
+        value={form.password.value}
         onChange={handleFormChange}
         heading="Password"
         errorMessage={errors.password}
@@ -84,7 +100,7 @@ const SignUpForm = () => {
       <FormInput
         name="repeatPassword"
         type="password"
-        value={form.repeatPassword}
+        value={form.repeatPassword.value}
         onChange={handleFormChange}
         heading="Repeat Password"
         errorMessage={errors.repeatPassword}
