@@ -117,7 +117,7 @@ const SignUpForm = () => {
         value={form.repeatPassword.value}
         onChange={handleFormChange}
         heading="Repeat Password"
-        errorMessage={form.repeatPassword.touched ? errors.repeatPassword : ""}
+        errorMessage={form.repeatPassword.value ? errors.repeatPassword : ""}
         onBlur={handleBlur}
       />
       <button className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3">
