@@ -1,4 +1,35 @@
-import { useState } from "react";
+import { useReducer } from "react";
+
+type FormReducerAction =
+  | { type: "inputTouched"; payload: { name: string } }
+  | { type: "inputChange"; payload: { name: string; value: string } };
+
+const formReducer = (state: FormState, action: FormReducerAction) => {
+  switch (action.type) {
+    case "inputTouched": {
+      const { name } = action.payload;
+      return {
+        ...state,
+        [name]: {
+          ...state[name as keyof FormState],
+          touched: true,
+        },
+      };
+    }
+    case "inputChange": {
+      const { name, value } = action.payload;
+      return {
+        ...state,
+        [name]: {
+          ...state[name as keyof FormState],
+          value,
+        },
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   heading: string;
@@ -18,7 +49,17 @@ const FormInput = ({ heading, errorMessage, ...props }: FormInputProps) => {
   );
 };
 
-const initialFormState = {
+interface InputObject {
+  value: string;
+  touched: boolean;
+}
+interface FormState {
+  username: InputObject;
+  password: InputObject;
+  repeatPassword: InputObject;
+}
+
+const initialFormState: FormState = {
   username: {
     value: "",
     touched: false,
@@ -34,7 +75,7 @@ const initialFormState = {
 };
 
 const SignUpForm = () => {
-  const [form, setForm] = useState(initialFormState);
+  const [form, dispatch] = useReducer(formReducer, initialFormState);
 
   const validation = {
     username: {
@@ -53,13 +94,7 @@ const SignUpForm = () => {
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setForm({
-      ...form,
-      [name]: {
-        ...form[name as keyof typeof form],
-        value,
-      },
-    });
+    dispatch({ type: "inputChange", payload: { name, value } });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -68,14 +103,7 @@ const SignUpForm = () => {
 
   const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = event.target;
-    const nameWithNarrowedType = name as keyof typeof form;
-    setForm({
-      ...form,
-      [name]: {
-        ...form[nameWithNarrowedType],
-        touched: true,
-      },
-    });
+    dispatch({ type: "inputTouched", payload: { name } });
   };
 
   const errors = Object.keys(form).reduce((result, key) => {
