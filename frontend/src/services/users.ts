@@ -1,6 +1,6 @@
 import axios from "axios";
 import tokenService from "./token";
-import { User } from "../types/types";
+import { Credentials, User } from "../types/types";
 const baseUrl = "/api/users";
 
 const getAll = async () => {
@@ -36,9 +36,15 @@ const unfollow = async (id: string) => {
   return response.data;
 };
 
+const create = async (credentials: Credentials) => {
+  const response = await axios.post<User>(baseUrl, credentials);
+  return response.data;
+};
+
 export default {
   getAll,
   getLoggedInUser,
   follow,
   unfollow,
+  create,
 };

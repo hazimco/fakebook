@@ -1,4 +1,6 @@
 import { useReducer } from "react";
+import { useMutation } from "@tanstack/react-query";
+import usersService from "../../services/users";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -77,6 +79,13 @@ const initialFormState: FormState = {
 const SignUpForm = () => {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
 
+  const createUserMutation = useMutation({
+    mutationFn: usersService.create,
+    onSuccess: (response) => {
+      console.log(response);
+    },
+  });
+
   const validation = {
     username: {
       isValid: (value: string) => value.length >= 3 && value.length <= 20,
@@ -99,6 +108,11 @@ const SignUpForm = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    createUserMutation.mutate({
+      username: form.username.value,
+      password: form.password.value,
+    });
   };
 
   const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,7 +162,6 @@ const SignUpForm = () => {
         errorMessage={form.repeatPassword.value ? errors.repeatPassword : ""}
         onBlur={handleBlur}
       />
-
       <button
         disabled={Object.values(errors).some((value) => value !== "")}
         className="bg-blue-400 text-white hover:bg-blue-500 active:bg-blue-600 font-semibold rounded-md p-1.5 mt-3 disabled:bg-slate-200 disabled:text-slate-400"
