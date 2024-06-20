@@ -1,6 +1,8 @@
 import { useReducer } from "react";
 import { useMutation } from "@tanstack/react-query";
 import usersService from "../../services/users";
+import useNotification from "../../hooks/useNotification";
+import axios from "axios";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -31,6 +33,14 @@ const formReducer = (state: FormState, action: FormReducerAction) => {
     default:
       return state;
   }
+};
+
+interface ErrorNotificationProps {
+  message: string;
+}
+
+const ErrorNotification = ({ message }: ErrorNotificationProps) => {
+  return <div className="text-red-500 text-center">{message}</div>;
 };
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -79,10 +89,20 @@ const initialFormState: FormState = {
 const SignUpForm = () => {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
 
+  const [error, setError] = useNotification();
+
   const createUserMutation = useMutation({
     mutationFn: usersService.create,
     onSuccess: (response) => {
       console.log(response);
+    },
+    onError: (error) => {
+      //this could happen if e.g. backend does not work, or if validation in client is incorrect or incomplete
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.error || error.message);
+      } else {
+        setError("Unknown error: " + error);
+      }
     },
   });
 
@@ -168,6 +188,7 @@ const SignUpForm = () => {
       >
         Sign up
       </button>
+      {error && <ErrorNotification message={error} />}
     </form>
   );
 };
