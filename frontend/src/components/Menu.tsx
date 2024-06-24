@@ -6,7 +6,7 @@ interface Props {
 
 const Menu = ({ logout }: Props) => {
   return (
-    <nav className="bg-blue-500 font-medium text-gray-100 rounded-md p-1 flex gap-4 justify-evenly">
+    <nav className="bg-blue-500 font-medium text-gray-100 rounded-md p-1 flex gap-4 justify-evenly sticky top-4">
       <StyledNavLink to="/">Profile</StyledNavLink>
       <StyledNavLink to="/posts">Posts</StyledNavLink>
       <StyledNavLink to="/users">Users</StyledNavLink>
