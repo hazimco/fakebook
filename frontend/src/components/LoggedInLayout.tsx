@@ -11,7 +11,7 @@ const LoggedInLayout = ({ isLoggedIn, handleLogout }: Props) => {
     return <Navigate to="/login" replace />;
   }
   return (
-    <div className="mt-4 px-3 flex flex-col w-full gap-4">
+    <div className="px-3 flex flex-col w-full gap-4">
       <Menu logout={handleLogout} />
       <Outlet />
     </div>
