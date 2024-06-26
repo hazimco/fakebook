@@ -17,6 +17,7 @@ const StyledInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <input
       {...props}
+      autoCapitalize="off"
       className="border-gray-400 border rounded-md py-1.5 px-2 bg-gray-100"
     />
   );
