@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <Routes>
-      <Route element={<LoggedOutLayout />}>
+      <Route element={<LoggedOutLayout isLoggedIn={isLoggedIn} />}>
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
