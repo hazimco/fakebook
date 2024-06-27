@@ -45,6 +45,7 @@ const LoginForm = ({ setIsLoggedIn }: LoginFormProps) => {
       });
       setIsLoggedIn(true);
       tokenService.setToken(user.token);
+      localStorage.setItem("logged-in-user", JSON.stringify(user));
       navigate("/");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
