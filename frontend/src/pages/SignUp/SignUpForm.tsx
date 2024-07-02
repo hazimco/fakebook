@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import usersService from "../../services/users";
 import useNotification from "../../hooks/useNotification";
 import axios from "axios";
+import ErrorNotification from "../../components/ErrorNotification";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -33,14 +34,6 @@ const formReducer = (state: FormState, action: FormReducerAction) => {
     default:
       return state;
   }
-};
-
-interface ErrorNotificationProps {
-  message: string;
-}
-
-const ErrorNotification = ({ message }: ErrorNotificationProps) => {
-  return <div className="text-red-500 text-center">{message}</div>;
 };
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

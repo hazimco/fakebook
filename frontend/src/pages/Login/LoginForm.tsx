@@ -4,14 +4,7 @@ import useNotification from "../../hooks/useNotification";
 import tokenService from "../../services/token";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-interface ErrorNotificationProps {
-  message: string;
-}
-
-const ErrorNotification = ({ message }: ErrorNotificationProps) => {
-  return <div className="text-red-500 text-center">{message}</div>;
-};
+import ErrorNotification from "../../components/ErrorNotification";
 
 const StyledInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
