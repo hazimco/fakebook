@@ -1,12 +1,18 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Location, Navigate, Outlet, useLocation } from "react-router-dom";
 
 interface Props {
   isLoggedIn: boolean;
 }
 
+interface LocationState {
+  from?: Location;
+}
+
 const LoggedOutLayout = ({ isLoggedIn }: Props) => {
+  const location: Location<LocationState | undefined> = useLocation();
+
   if (isLoggedIn) {
-    return <Navigate to={"/"} replace />;
+    return <Navigate to={location.state?.from?.pathname || "/"} replace />;
   }
 
   return (
