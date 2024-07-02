@@ -33,6 +33,7 @@ const App = () => {
   }, []);
 
   const handleLogout = () => {
+    localStorage.removeItem("logged-in-user");
     setIsLoggedIn(false);
     tokenService.setToken(null);
     queryClient.clear();
