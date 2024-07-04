@@ -4,6 +4,7 @@ import usersService from "../../services/users";
 import useNotification from "../../hooks/useNotification";
 import axios from "axios";
 import ErrorNotification from "../../components/ErrorNotification";
+import FormInput from "../../components/FormInput";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -34,25 +35,6 @@ const formReducer = (state: FormState, action: FormReducerAction) => {
     default:
       return state;
   }
-};
-
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  heading: string;
-  errorMessage: string;
-}
-
-const FormInput = ({ heading, errorMessage, ...props }: FormInputProps) => {
-  return (
-    <div className="flex flex-col">
-      <h2>{heading}</h2>
-      <input
-        {...props}
-        autoCapitalize="off"
-        className="border-gray-400 border rounded-md py-1.5 px-2 bg-gray-100"
-      />
-      <div className="text-red-600">{errorMessage}</div>
-    </div>
-  );
 };
 
 interface InputObject {
