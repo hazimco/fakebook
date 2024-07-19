@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Posts from "./pages/Posts";
 import Users from "./pages/Users";
-import tokenService from "./services/token";
-import usersService from "./services/users";
 import SignUp from "./pages/SignUp";
 import LoggedInLayout from "./components/LoggedInLayout";
 import LoggedOutLayout from "./components/LoggedOutLayout";
+
+import tokenService from "./services/token";
+import useGetLoggedInUser from "./hooks/useGetLoggedInUser";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const queryClient = useQueryClient();
-
-  const query = useQuery({
-    queryKey: ["loggedInUser"],
-    queryFn: usersService.getLoggedInUser,
-    enabled: isLoggedIn,
-  });
 
   useEffect(() => {
     const loggedInUserJson = localStorage.getItem("logged-in-user");
@@ -39,8 +34,7 @@ const App = () => {
     queryClient.clear();
   };
 
-  const loggedInUser = query.data;
-
+  const { loggedInUser } = useGetLoggedInUser(isLoggedIn, handleLogout);
   return (
     <Routes>
       <Route element={<LoggedOutLayout isLoggedIn={isLoggedIn} />}>
