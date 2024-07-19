@@ -44,7 +44,7 @@ const PostForm = () => {
           <div className="flex gap-2">
             <div className="flex gap-2">
               <button className="bg-green-300 hover:bg-green-200 active:bg-green-400 py-1 px-3 rounded-md">
-                Add comment
+                Done
               </button>
               <button
                 onClick={closeForm}
