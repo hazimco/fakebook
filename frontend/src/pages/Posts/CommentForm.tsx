@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../../services/posts";
 import { Comment, Post } from "../../types/types";
+import axios from "axios";
+import useNotification from "../../hooks/useNotification";
+import ErrorNotification from "../../components/ErrorNotification";
 
 interface Props {
   postId: string;
@@ -10,6 +13,8 @@ interface Props {
 
 const CommentForm = ({ postId, setShowForm }: Props) => {
   const [text, setText] = useState("");
+
+  const [error, setError] = useNotification();
 
   const queryClient = useQueryClient();
 
@@ -43,6 +48,13 @@ const CommentForm = ({ postId, setShowForm }: Props) => {
 
       closeForm();
     },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.error || error.message);
+      } else {
+        setError("Unknown error: " + error);
+      }
+    },
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,6 +87,7 @@ const CommentForm = ({ postId, setShowForm }: Props) => {
           Cancel
         </button>
       </div>
+      {error && <ErrorNotification message={error} />}
     </form>
   );
 };
