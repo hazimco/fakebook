@@ -2,10 +2,15 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postsService from "../../services/posts";
 import { Post } from "../../types/types";
+import ErrorNotification from "../../components/ErrorNotification";
+import useNotification from "../../hooks/useNotification";
+import axios from "axios";
 
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
+
+  const [error, setError] = useNotification();
 
   const queryClient = useQueryClient();
 
@@ -21,6 +26,13 @@ const PostForm = () => {
       queryClient.setQueryData(["posts"], [...posts, newPost]);
 
       closeForm();
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.error || error.message);
+      } else {
+        setError("Unknown error: " + error);
+      }
     },
   });
 
@@ -55,6 +67,7 @@ const PostForm = () => {
             </div>
             <div className="self-end">{140 - text.length} characters left</div>
           </div>
+          <ErrorNotification message={error} />
         </form>
       ) : (
         <button
