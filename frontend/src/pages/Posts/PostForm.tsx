@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import postsService from "../../services/posts";
 import { Post } from "../../types/types";
 import ErrorNotification from "../../components/ErrorNotification";
-import useNotification from "../../hooks/useNotification";
-import axios from "axios";
+import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
 
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
-
-  const [error, setError] = useNotification();
 
   const queryClient = useQueryClient();
 
@@ -19,22 +16,16 @@ const PostForm = () => {
     setText("");
   };
 
-  const newPostMutation = useMutation({
-    mutationFn: postsService.createNew,
-    onSuccess: (newPost) => {
-      const posts = queryClient.getQueryData<Post[]>(["posts"]) || [];
-      queryClient.setQueryData(["posts"], [...posts, newPost]);
+  const { mutation: newPostMutation, notification: error } =
+    useMutationWithNotificationOnError({
+      mutationFn: postsService.createNew,
+      onSuccess: (newPost) => {
+        const posts = queryClient.getQueryData<Post[]>(["posts"]) || [];
+        queryClient.setQueryData(["posts"], [...posts, newPost]);
 
-      closeForm();
-    },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || error.message);
-      } else {
-        setError("Unknown error: " + error);
-      }
-    },
-  });
+        closeForm();
+      },
+    });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
