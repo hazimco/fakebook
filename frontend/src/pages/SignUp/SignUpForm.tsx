@@ -1,10 +1,8 @@
 import { useReducer } from "react";
-import { useMutation } from "@tanstack/react-query";
 import usersService from "../../services/users";
-import useNotification from "../../hooks/useNotification";
-import axios from "axios";
 import ErrorNotification from "../../components/ErrorNotification";
 import FormInput from "../../components/FormInput";
+import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -65,22 +63,13 @@ const initialFormState: FormState = {
 const SignUpForm = () => {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
 
-  const [error, setError] = useNotification();
-
-  const createUserMutation = useMutation({
-    mutationFn: usersService.create,
-    onSuccess: (response) => {
-      console.log(response);
-    },
-    onError: (error) => {
-      //this could happen if e.g. backend does not work, or if validation in client is incorrect or incomplete
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || error.message);
-      } else {
-        setError("Unknown error: " + error);
-      }
-    },
-  });
+  const { mutation: createUserMutation, notification: error } =
+    useMutationWithNotificationOnError({
+      mutationFn: usersService.create,
+      onSuccess: (response) => {
+        console.log(response);
+      },
+    });
 
   const validation = {
     username: {
