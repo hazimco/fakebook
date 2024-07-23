@@ -1,10 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import usersService from "../../services/users";
-
 import { User as UserType } from "../../types/types";
-import useNotification from "../../hooks/useNotification";
-import axios from "axios";
 import ErrorNotification from "../../components/ErrorNotification";
+
+import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
 
 interface Props {
   user: UserType;
@@ -17,37 +16,26 @@ const User = ({ user, loggedInUser }: Props) => {
 
   const followedByLoggedInUser = loggedInUser.following.includes(id);
 
-  const [error, setError] = useNotification();
-
   const queryClient = useQueryClient();
 
-  const followMutation = useMutation({
-    mutationFn: usersService.follow,
-    onSuccess: (loggedInUserWithAddedFollow) => {
-      queryClient.setQueryData(["loggedInUser"], loggedInUserWithAddedFollow);
-    },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || error.message);
-      } else {
-        setError("Unknown error: " + error);
-      }
-    },
-  });
+  const { mutation: followMutation, notification: followMutationError } =
+    useMutationWithNotificationOnError({
+      mutationFn: usersService.follow,
+      onSuccess: (loggedInUserWithAddedFollow) => {
+        queryClient.setQueryData(["loggedInUser"], loggedInUserWithAddedFollow);
+      },
+    });
 
-  const unfollowMutation = useMutation({
-    mutationFn: usersService.unfollow,
-    onSuccess: (loggedInUserWithRemovedFollow) => {
-      queryClient.setQueryData(["loggedInUser"], loggedInUserWithRemovedFollow);
-    },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || error.message);
-      } else {
-        setError("Unknown error: " + error);
-      }
-    },
-  });
+  const { mutation: unfollowMutation, notification: unfollowMutationError } =
+    useMutationWithNotificationOnError({
+      mutationFn: usersService.unfollow,
+      onSuccess: (loggedInUserWithRemovedFollow) => {
+        queryClient.setQueryData(
+          ["loggedInUser"],
+          loggedInUserWithRemovedFollow
+        );
+      },
+    });
 
   const handleClick = () => {
     followedByLoggedInUser
@@ -73,7 +61,9 @@ const User = ({ user, loggedInUser }: Props) => {
           </button>
         )}
       </div>
-      <ErrorNotification message={error} />
+      <ErrorNotification
+        message={followMutationError || unfollowMutationError}
+      />
     </div>
   );
 };
