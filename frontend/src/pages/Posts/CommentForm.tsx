@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import postsService from "../../services/posts";
 import { Comment, Post } from "../../types/types";
-import axios from "axios";
-import useNotification from "../../hooks/useNotification";
 import ErrorNotification from "../../components/ErrorNotification";
+import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
 
 interface Props {
   postId: string;
@@ -14,8 +13,6 @@ interface Props {
 const CommentForm = ({ postId, setShowForm }: Props) => {
   const [text, setText] = useState("");
 
-  const [error, setError] = useNotification();
-
   const queryClient = useQueryClient();
 
   const closeForm = () => {
@@ -23,39 +20,33 @@ const CommentForm = ({ postId, setShowForm }: Props) => {
     setText("");
   };
 
-  const addCommentMutation = useMutation({
-    mutationFn: postsService.addComment,
-    onSuccess: (newComment) => {
-      const comments = queryClient.getQueryData<Comment[]>([
-        "post-comments",
-        postId,
-      ]);
-      if (comments) {
-        queryClient.setQueryData(
-          ["post-comments", postId],
-          [...comments, newComment]
-        );
-      } else {
-        //updating "posts" query so the "show comments" button is displayed for the post
-        const posts = queryClient.getQueryData<Post[]>(["posts"]) || []; // "|| []" is to silence typescript - logically, if you have just added a comment to a post, then there needs to be at least one post returned by getQueryData
-        const updatedPosts = posts.map((post) =>
-          post.id !== postId
-            ? post
-            : { ...post, comments: [...post.comments, newComment] }
-        );
-        queryClient.setQueryData(["posts"], updatedPosts);
-      }
+  const { mutation: addCommentMutation, notification: error } =
+    useMutationWithNotificationOnError({
+      mutationFn: postsService.addComment,
+      onSuccess: (newComment) => {
+        const comments = queryClient.getQueryData<Comment[]>([
+          "post-comments",
+          postId,
+        ]);
+        if (comments) {
+          queryClient.setQueryData(
+            ["post-comments", postId],
+            [...comments, newComment]
+          );
+        } else {
+          //updating "posts" query so the "show comments" button is displayed for the post
+          const posts = queryClient.getQueryData<Post[]>(["posts"]) || []; // "|| []" is to silence typescript - logically, if you have just added a comment to a post, then there needs to be at least one post returned by getQueryData
+          const updatedPosts = posts.map((post) =>
+            post.id !== postId
+              ? post
+              : { ...post, comments: [...post.comments, newComment] }
+          );
+          queryClient.setQueryData(["posts"], updatedPosts);
+        }
 
-      closeForm();
-    },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || error.message);
-      } else {
-        setError("Unknown error: " + error);
-      }
-    },
-  });
+        closeForm();
+      },
+    });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
