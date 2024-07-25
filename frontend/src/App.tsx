@@ -12,6 +12,7 @@ import LoggedOutLayout from "./components/LoggedOutLayout";
 
 import tokenService from "./services/token";
 import useGetLoggedInUser from "./hooks/useGetLoggedInUser";
+import PageTitle from "./components/PageTitle";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,7 +38,14 @@ const App = () => {
   const { loggedInUser } = useGetLoggedInUser(isLoggedIn, handleLogout);
   return (
     <Routes>
-      <Route element={<LoggedOutLayout isLoggedIn={isLoggedIn} />}>
+      <Route
+        element={
+          <>
+            <PageTitle />
+            <LoggedOutLayout isLoggedIn={isLoggedIn} />
+          </>
+        }
+      >
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
@@ -46,7 +54,13 @@ const App = () => {
       </Route>
       <Route
         element={
-          <LoggedInLayout isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          <>
+            <PageTitle />
+            <LoggedInLayout
+              isLoggedIn={isLoggedIn}
+              handleLogout={handleLogout}
+            />
+          </>
         }
       >
         <Route path="/" element={<Profile loggedInUser={loggedInUser} />} />
