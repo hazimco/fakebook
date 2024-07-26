@@ -1,8 +1,7 @@
 import { useReducer } from "react";
-import usersService from "../../services/users";
 import ErrorNotification from "../../components/ErrorNotification";
 import FormInput from "../../components/FormInput";
-import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
+import useCreateUser from "../../hooks/useCreateUser";
 
 type FormReducerAction =
   | { type: "inputTouched"; payload: { name: string } }
@@ -63,13 +62,7 @@ const initialFormState: FormState = {
 const SignUpForm = () => {
   const [form, dispatch] = useReducer(formReducer, initialFormState);
 
-  const { mutation: createUserMutation, notification: error } =
-    useMutationWithNotificationOnError({
-      mutationFn: usersService.create,
-      onSuccess: (response) => {
-        console.log(response);
-      },
-    });
+  const { mutation: createUserMutation, notification: error } = useCreateUser();
 
   const validation = {
     username: {
