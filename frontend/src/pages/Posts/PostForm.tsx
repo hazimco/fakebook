@@ -1,31 +1,18 @@
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import postsService from "../../services/posts";
-import { Post } from "../../types/types";
 import ErrorNotification from "../../components/ErrorNotification";
-import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
+import useCreatePost from "../../hooks/useCreatePost";
 
 const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
-  const queryClient = useQueryClient();
-
   const closeForm = () => {
     setShowForm(false);
     setText("");
   };
-
-  const { mutation: newPostMutation, notification: error } =
-    useMutationWithNotificationOnError({
-      mutationFn: postsService.createNew,
-      onSuccess: (newPost) => {
-        const posts = queryClient.getQueryData<Post[]>(["posts"]) || [];
-        queryClient.setQueryData(["posts"], [...posts, newPost]);
-
-        closeForm();
-      },
-    });
+  const { mutation: newPostMutation, notification: error } = useCreatePost({
+    closeForm,
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
