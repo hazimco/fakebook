@@ -3,6 +3,27 @@ import usersService from "../services/users";
 import User from "./Users/User";
 import { User as UserType } from "../types/types";
 
+interface UserConnectionListProps {
+  title: string;
+  userConnections: UserType[];
+  loggedInUser: UserType;
+}
+
+const UserConnectionList = ({
+  title,
+  userConnections,
+  loggedInUser,
+}: UserConnectionListProps) => {
+  return (
+    <div className="flex-1">
+      <h4 className="text-lg font-medium">{title}</h4>
+      {userConnections.map((user) => (
+        <User key={user.id} user={user} loggedInUser={loggedInUser} />
+      ))}
+    </div>
+  );
+};
+
 interface Props {
   loggedInUser?: UserType;
 }
@@ -32,18 +53,16 @@ const Profile = ({ loggedInUser }: Props) => {
         Profile of {loggedInUser.username}
       </h1>
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1">
-          <h4 className="text-lg font-medium">Following:</h4>
-          {followingUsers.map((user) => (
-            <User key={user.id} user={user} loggedInUser={loggedInUser} />
-          ))}
-        </div>
-        <div className="flex-1">
-          <h4 className="text-lg font-medium">Followed by:</h4>
-          {followedByUsers.map((user) => (
-            <User key={user.id} user={user} loggedInUser={loggedInUser} />
-          ))}
-        </div>
+        <UserConnectionList
+          title={"Following:"}
+          userConnections={followingUsers}
+          loggedInUser={loggedInUser}
+        />
+        <UserConnectionList
+          title={"Followed by:"}
+          userConnections={followedByUsers}
+          loggedInUser={loggedInUser}
+        />
       </div>
     </div>
   );
