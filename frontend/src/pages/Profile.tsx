@@ -24,6 +24,23 @@ const UserConnectionList = ({
   );
 };
 
+interface ProfileCardProps {
+  username: string;
+  description: string;
+}
+
+const ProfileCard = ({ username, description }: ProfileCardProps) => {
+  return (
+    <div className="border-fuchsia-400 border flex gap-x-4">
+      <img src={""} alt={`profile picture of ${username}`} />
+      <div className="flex-col gap-5">
+        <h1 className="font-medium text-2xl">{username}</h1>
+        <p>{description}</p>
+      </div>
+    </div>
+  );
+};
+
 interface Props {
   loggedInUser?: UserType;
 }
@@ -49,9 +66,12 @@ const Profile = ({ loggedInUser }: Props) => {
 
   return (
     <div>
-      <h1 className="font-medium text-2xl mb-4">
-        Profile of {loggedInUser.username}
-      </h1>
+      <ProfileCard
+        username={loggedInUser.username}
+        description={
+          "Christopher Edward Nolan (born 30 July 1970) is a British and American filmmaker. Known for his Hollywood blockbusters with complex storytelling, he is considered a leading filmmaker of the 21st century."
+        }
+      />
       <div className="flex flex-col sm:flex-row gap-4">
         <UserConnectionList
           title={"Following:"}
