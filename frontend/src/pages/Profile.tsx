@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
 import { User as UserType } from "../types/types";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 interface UserConnectionListProps {
   title: string;
@@ -27,15 +28,22 @@ const UserConnectionList = ({
 interface ProfileCardProps {
   username: string;
   description: string;
+  imgUrl?: string;
 }
 
-const ProfileCard = ({ username, description }: ProfileCardProps) => {
+const ProfileCard = ({ username, description, imgUrl }: ProfileCardProps) => {
   return (
-    <div className="border-fuchsia-400 border flex gap-x-4">
-      <img src={""} alt={`profile picture of ${username}`} />
-      <div className="flex-col gap-5">
-        <h1 className="font-medium text-2xl">{username}</h1>
-        <p>{description}</p>
+    <div className="bg-slate-200 p-4 mb-3 rounded-md flex gap-x-4">
+      <div className="min-w-20 max-w-20 min-h-20 max-h-20">
+        {imgUrl ? (
+          <img src={imgUrl} alt={`profile picture of ${username}`} />
+        ) : (
+          <UserCircleIcon />
+        )}
+      </div>
+      <div className="flex flex-col gap-1">
+        <h1 className="font-bold text-xl">{username}</h1>
+        <p className="text-sm">{description}</p>
       </div>
     </div>
   );
