@@ -42,7 +42,9 @@ const ProfileCard = ({ username, description, imgUrl }: ProfileCardProps) => {
         )}
       </div>
       <div className="flex flex-col gap-1">
-        <h1 className="font-bold text-xl">{username}</h1>
+        <h1 className="font-bold text-xl [word-break:break-word] leading-none">
+          {username}
+        </h1>
         <p className="text-sm">{description}</p>
       </div>
     </div>
