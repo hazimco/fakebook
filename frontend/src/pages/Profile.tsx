@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
@@ -25,6 +26,62 @@ const UserConnectionList = ({
   );
 };
 
+interface ProfileImageProps {
+  imgUrl?: string;
+  username: string;
+}
+
+const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState("");
+
+  // to free memory in browser
+  // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static#memory_management
+  useEffect(() => {
+    return () => {
+      if (file) {
+        URL.revokeObjectURL(file);
+      }
+    };
+  }, [file]);
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setFile(imageUrl);
+    }
+  };
+
+  return (
+    <div className="flex flex-col">
+      {imgUrl || file ? (
+        <img src={imgUrl || file} alt={`profile picture of ${username}`} />
+      ) : (
+        <UserCircleIcon />
+      )}
+      <button
+        onClick={handleClick}
+        className="border border-slate-400 bg-slate-300 rounded-md text-sm"
+      >
+        Edit
+      </button>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        hidden
+      />
+    </div>
+  );
+};
+
 interface ProfileCardProps {
   username: string;
   description: string;
@@ -34,13 +91,7 @@ interface ProfileCardProps {
 const ProfileCard = ({ username, description, imgUrl }: ProfileCardProps) => {
   return (
     <div className="bg-slate-200 p-4 mb-3 rounded-md flex gap-x-4">
-      <div className="min-w-20 max-w-20 min-h-20 max-h-20">
-        {imgUrl ? (
-          <img src={imgUrl} alt={`profile picture of ${username}`} />
-        ) : (
-          <UserCircleIcon />
-        )}
-      </div>
+      <ProfileImage imgUrl={imgUrl} username={username} />
       <div className="flex flex-col gap-1">
         <h1 className="font-bold text-xl [word-break:break-word] leading-none">
           {username}
