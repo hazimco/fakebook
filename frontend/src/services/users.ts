@@ -41,10 +41,19 @@ const create = async (credentials: Credentials) => {
   return response.data;
 };
 
+const uploadProfileImage = async (data: FormData) => {
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.post(`${baseUrl}/profile-image`, data, config);
+  return response.data;
+};
+
 export default {
   getAll,
   getLoggedInUser,
   follow,
   unfollow,
   create,
+  uploadProfileImage,
 };

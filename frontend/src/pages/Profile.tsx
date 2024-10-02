@@ -4,6 +4,7 @@ import usersService from "../services/users";
 import User from "./Users/User";
 import { User as UserType } from "../types/types";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import useMutationWithNotificationOnError from "../hooks/useMutationWithNotificationOnError";
 
 interface UserConnectionListProps {
   title: string;
@@ -35,6 +36,14 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState("");
 
+  const { mutation: uploadProfileImageMutation, notification: error } =
+    useMutationWithNotificationOnError({
+      mutationFn: usersService.uploadProfileImage,
+      onSuccess: (response) => {
+        console.log(response);
+      },
+    });
+
   // to free memory in browser
   // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static#memory_management
   useEffect(() => {
@@ -55,6 +64,11 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
       setFile(imageUrl);
+
+      const formData = new FormData();
+      formData.append("profileImage", selectedFile);
+
+      uploadProfileImageMutation.mutate(formData);
     }
   };
 
