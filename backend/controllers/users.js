@@ -2,6 +2,9 @@ const usersRouter = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const middleware = require("../utils/middleware");
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 usersRouter.get("/", async (req, res) => {
   const users = await User.find({});
@@ -101,6 +104,32 @@ usersRouter.post(
     const savedUser = await user.save();
 
     res.json(savedUser);
+  }
+);
+
+usersRouter.post(
+  "/profile-image",
+  upload.single("profileImage"), // fieldName needs to be the same as name in formData.append() on the frontend
+  middleware.addUserToReqObject,
+  async (req, res) => {
+    const { user } = req;
+
+    if (!req.file) {
+      res.status(400).json({ error: "no image uploaded" });
+      return;
+    }
+
+    user.profileImage = {
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    };
+
+    await user.save();
+
+    res.json({
+      message: "profile image uploaded successfully",
+      username: user.username,
+    });
   }
 );
 
