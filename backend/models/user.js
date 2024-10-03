@@ -42,6 +42,17 @@ userSchema.plugin(uniqueValidator);
 userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
+
+    // profileImage.data starts out as
+    // { type: "Buffer", data: Array of bytes }
+    // so I change it to be profileImage.data.data since the "type" is not necessary,
+    // and I encode the data as base64 so that the client does not have to deal with converting it
+    if (returnedObject.profileImage?.data) {
+      returnedObject.profileImage.data = Buffer.from(
+        returnedObject.profileImage.data.data
+      ).toString("base64");
+    }
+
     delete returnedObject._id;
     delete returnedObject.__v;
 
