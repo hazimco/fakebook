@@ -4,8 +4,13 @@ export interface User {
   posts: string[];
   following: string[];
   followedBy: string[];
+  profileImage?: ProfileImage;
 }
 
+interface ProfileImage {
+  data: string;
+  contentType: string;
+}
 export interface Post {
   id: string;
   text: string;

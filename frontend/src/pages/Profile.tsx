@@ -99,10 +99,18 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
 interface ProfileCardProps {
   username: string;
   description: string;
-  imgUrl?: string;
+  profileImage?: UserType["profileImage"];
 }
 
-const ProfileCard = ({ username, description, imgUrl }: ProfileCardProps) => {
+const ProfileCard = ({
+  username,
+  description,
+  profileImage,
+}: ProfileCardProps) => {
+  const imgUrl =
+    profileImage &&
+    `data:${profileImage?.contentType};base64,${profileImage?.data}`;
+
   return (
     <div className="bg-slate-200 p-4 mb-3 rounded-md flex gap-x-4">
       <ProfileImage imgUrl={imgUrl} username={username} />
@@ -146,6 +154,7 @@ const Profile = ({ loggedInUser }: Props) => {
         description={
           "Christopher Edward Nolan (born 30 July 1970) is a British and American filmmaker. Known for his Hollywood blockbusters with complex storytelling, he is considered a leading filmmaker of the 21st century."
         }
+        profileImage={loggedInUser.profileImage}
       />
       <div className="flex flex-col sm:flex-row gap-4">
         <UserConnectionList
