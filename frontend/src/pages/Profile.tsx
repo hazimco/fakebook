@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
 import { User as UserType } from "../types/types";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import useMutationWithNotificationOnError from "../hooks/useMutationWithNotificationOnError";
+import ErrorNotification from "../components/ErrorNotification";
 
 interface UserConnectionListProps {
   title: string;
@@ -34,7 +35,6 @@ interface ProfileImageProps {
 
 const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState("");
 
   const { mutation: uploadProfileImageMutation, notification: error } =
     useMutationWithNotificationOnError({
@@ -44,16 +44,6 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
       },
     });
 
-  // to free memory in browser
-  // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static#memory_management
-  useEffect(() => {
-    return () => {
-      if (file) {
-        URL.revokeObjectURL(file);
-      }
-    };
-  }, [file]);
-
   const handleClick = () => {
     fileInputRef.current?.click();
   };
@@ -62,9 +52,6 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile);
-      setFile(imageUrl);
-
       const formData = new FormData();
       formData.append("profileImage", selectedFile);
 
@@ -74,8 +61,10 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
 
   return (
     <div className="flex flex-col">
-      {imgUrl || file ? (
-        <img src={imgUrl || file} alt={`profile picture of ${username}`} />
+      {imgUrl ? (
+        <img src={imgUrl} alt={`profile picture of ${username}`} />
+      ) : error ? (
+        <ErrorNotification message={error} className="text-xs" />
       ) : (
         <UserCircleIcon />
       )}
