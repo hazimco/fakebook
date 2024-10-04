@@ -5,6 +5,7 @@ const middleware = require("../utils/middleware");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const sharp = require("sharp");
 
 usersRouter.get("/", async (req, res) => {
   const users = await User.find({});
@@ -119,8 +120,22 @@ usersRouter.post(
       return;
     }
 
+    const TEN_MEGABYTES = 1024 * 1024 * 10;
+
+    if (req.file.size > TEN_MEGABYTES) {
+      res
+        .status(400)
+        .json({ error: "image must be max 10 MB, use a smaller image!" });
+      return;
+    }
+
+    const compressedImageBuffer = await sharp(req.file.buffer)
+      .resize(100)
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toBuffer();
+
     user.profileImage = {
-      data: req.file.buffer,
+      data: compressedImageBuffer,
       contentType: req.file.mimetype,
     };
 
