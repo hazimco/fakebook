@@ -35,7 +35,10 @@ const App = () => {
     queryClient.clear();
   };
 
-  const { loggedInUser } = useGetLoggedInUser(isLoggedIn, handleLogout);
+  const { loggedInUser, refetch } = useGetLoggedInUser(
+    isLoggedIn,
+    handleLogout
+  );
   return (
     <Routes>
       <Route
@@ -63,7 +66,15 @@ const App = () => {
           </>
         }
       >
-        <Route path="/" element={<Profile loggedInUser={loggedInUser} />} />
+        <Route
+          path="/"
+          element={
+            <Profile
+              loggedInUser={loggedInUser}
+              refetchLoggedInUser={refetch}
+            />
+          }
+        />
         <Route path="/posts" element={<Posts />} />
         <Route path="/users" element={<Users loggedInUser={loggedInUser} />} />
       </Route>

@@ -1,5 +1,9 @@
 import { useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  useQuery,
+} from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
 import { User as UserType } from "../types/types";
@@ -31,9 +35,14 @@ const UserConnectionList = ({
 interface ProfileImageProps {
   imgUrl?: string;
   username: string;
+  refetchLoggedInUser: IRefetchLoggedInUser;
 }
 
-const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
+const ProfileImage = ({
+  imgUrl,
+  username,
+  refetchLoggedInUser,
+}: ProfileImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { mutation: uploadProfileImageMutation, notification: error } =
@@ -41,6 +50,7 @@ const ProfileImage = ({ imgUrl, username }: ProfileImageProps) => {
       mutationFn: usersService.uploadProfileImage,
       onSuccess: (response) => {
         console.log(response);
+        refetchLoggedInUser();
       },
     });
 
@@ -89,12 +99,14 @@ interface ProfileCardProps {
   username: string;
   description: string;
   profileImage?: UserType["profileImage"];
+  refetchLoggedInUser: IRefetchLoggedInUser;
 }
 
 const ProfileCard = ({
   username,
   description,
   profileImage,
+  refetchLoggedInUser,
 }: ProfileCardProps) => {
   const imgUrl =
     profileImage &&
@@ -102,7 +114,11 @@ const ProfileCard = ({
 
   return (
     <div className="bg-slate-200 p-4 mb-3 rounded-md flex gap-x-4">
-      <ProfileImage imgUrl={imgUrl} username={username} />
+      <ProfileImage
+        imgUrl={imgUrl}
+        username={username}
+        refetchLoggedInUser={refetchLoggedInUser}
+      />
       <div className="flex flex-col gap-1">
         <h1 className="font-bold text-xl [word-break:break-word] leading-none">
           {username}
@@ -113,11 +129,16 @@ const ProfileCard = ({
   );
 };
 
-interface Props {
-  loggedInUser?: UserType;
+interface IRefetchLoggedInUser {
+  (options?: RefetchOptions): Promise<QueryObserverResult<UserType, Error>>;
 }
 
-const Profile = ({ loggedInUser }: Props) => {
+interface Props {
+  loggedInUser?: UserType;
+  refetchLoggedInUser: IRefetchLoggedInUser;
+}
+
+const Profile = ({ loggedInUser, refetchLoggedInUser }: Props) => {
   const query = useQuery({ queryKey: ["users"], queryFn: usersService.getAll });
 
   const users = query.data;
@@ -144,6 +165,7 @@ const Profile = ({ loggedInUser }: Props) => {
           "Christopher Edward Nolan (born 30 July 1970) is a British and American filmmaker. Known for his Hollywood blockbusters with complex storytelling, he is considered a leading filmmaker of the 21st century."
         }
         profileImage={loggedInUser.profileImage}
+        refetchLoggedInUser={refetchLoggedInUser}
       />
       <div className="flex flex-col sm:flex-row gap-4">
         <UserConnectionList

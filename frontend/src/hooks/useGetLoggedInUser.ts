@@ -4,7 +4,7 @@ import usersService from "../services/users";
 import axios from "axios";
 
 const useGetLoggedInUser = (isLoggedIn: boolean, handleLogout: () => void) => {
-  const { data, error } = useQuery({
+  const { data, error, refetch } = useQuery({
     queryKey: ["loggedInUser"],
     queryFn: usersService.getLoggedInUser,
     enabled: isLoggedIn,
@@ -21,7 +21,7 @@ const useGetLoggedInUser = (isLoggedIn: boolean, handleLogout: () => void) => {
     }
   }, [handleLogout, error]);
 
-  return { loggedInUser: data };
+  return { loggedInUser: data, refetch };
 };
 
 export default useGetLoggedInUser;
