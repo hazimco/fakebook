@@ -148,4 +148,22 @@ usersRouter.post(
   }
 );
 
+usersRouter.put(
+  "/description",
+  middleware.addUserToReqObject,
+  async (req, res) => {
+    const { description } = req.body;
+    const { user } = req;
+
+    user.description = description;
+
+    const savedUser = await user.save();
+
+    res.json({
+      username: savedUser.username,
+      description: savedUser.description,
+    });
+  }
+);
+
 module.exports = usersRouter;

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  description: {
+    type: String,
+    maxLength: 240,
+  },
   passwordHash: {
     type: String,
     required: true,
