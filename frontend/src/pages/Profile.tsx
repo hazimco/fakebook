@@ -70,9 +70,13 @@ const ProfileImage = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-24 h-32 flex-shrink-0 justify-between">
       {imgUrl ? (
-        <img src={imgUrl} alt={`profile picture of ${username}`} />
+        <img
+          src={imgUrl}
+          alt={`profile picture of ${username}`}
+          className="w-full h-24 rounded-full object-cover object-top"
+        />
       ) : error ? (
         <ErrorNotification message={error} className="text-xs" />
       ) : (
