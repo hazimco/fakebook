@@ -78,7 +78,10 @@ const ProfileImage = ({
           className="w-full h-24 rounded-full object-cover object-top"
         />
       ) : error ? (
-        <ErrorNotification message={error} className="text-xs" />
+        <ErrorNotification
+          message={error}
+          className="text-sm h-full flex items-center justify-center"
+        />
       ) : (
         <UserCircleIcon />
       )}
