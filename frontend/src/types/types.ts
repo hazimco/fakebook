@@ -5,6 +5,7 @@ export interface User {
   following: string[];
   followedBy: string[];
   profileImage?: ProfileImage;
+  description: string;
 }
 
 interface ProfileImage {
