@@ -3,6 +3,7 @@ import {
   QueryObserverResult,
   RefetchOptions,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
@@ -144,11 +145,17 @@ const Description = ({ description }: IDescription) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
+  const queryClient = useQueryClient();
+
   const { mutation: editDescriptionMutation } =
     useMutationWithNotificationOnError({
       mutationFn: usersService.editDescription,
       onSuccess: (response) => {
-        console.log("######", response);
+        const user = queryClient.getQueryData<UserType>(["loggedInUser"]);
+        queryClient.setQueryData(["loggedInUser"], {
+          ...user,
+          description: response.description,
+        });
       },
     });
 
