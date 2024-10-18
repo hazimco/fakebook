@@ -49,6 +49,19 @@ const uploadProfileImage = async (data: FormData) => {
   return response.data;
 };
 
+const editDescription = async (description: string) => {
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+
+  const response = await axios.put<Pick<User, "username" | "description">>(
+    `${baseUrl}/description`,
+    { description },
+    config
+  );
+  return response.data;
+};
+
 export default {
   getAll,
   getLoggedInUser,
@@ -56,4 +69,5 @@ export default {
   unfollow,
   create,
   uploadProfileImage,
+  editDescription,
 };

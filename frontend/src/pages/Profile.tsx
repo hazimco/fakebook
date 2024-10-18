@@ -144,11 +144,18 @@ const Description = ({ description }: IDescription) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
+  const { mutation: editDescriptionMutation } =
+    useMutationWithNotificationOnError({
+      mutationFn: usersService.editDescription,
+      onSuccess: (response) => {
+        console.log("######", response);
+      },
+    });
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log(text);
-
+    editDescriptionMutation.mutate(text);
     setText("");
     setShowForm(false);
   };
