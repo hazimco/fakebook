@@ -147,7 +147,7 @@ const Description = ({ description }: IDescription) => {
 
   const queryClient = useQueryClient();
 
-  const { mutation: editDescriptionMutation } =
+  const { mutation: editDescriptionMutation, notification: error } =
     useMutationWithNotificationOnError({
       mutationFn: usersService.editDescription,
       onSuccess: (response) => {
@@ -202,6 +202,7 @@ const Description = ({ description }: IDescription) => {
       >
         {description ? "Edit description" : "Add description"}
       </button>
+      <ErrorNotification message={error} />
     </>
   );
 };
