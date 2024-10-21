@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
 import { IRefetchLoggedInUser, User as UserType } from "../types/types";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import useMutationWithNotificationOnError from "../hooks/useMutationWithNotificationOnError";
 import ErrorNotification from "../components/ErrorNotification";
 import useUploadProfileImage from "../hooks/useUploadProfileImage";
+import useEditDescription from "../hooks/useEditDescription";
 
 interface UserConnectionListProps {
   title: string;
@@ -135,19 +135,8 @@ const Description = ({ description }: IDescription) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
 
-  const queryClient = useQueryClient();
-
   const { mutation: editDescriptionMutation, notification: error } =
-    useMutationWithNotificationOnError({
-      mutationFn: usersService.editDescription,
-      onSuccess: (response) => {
-        const user = queryClient.getQueryData<UserType>(["loggedInUser"]);
-        queryClient.setQueryData(["loggedInUser"], {
-          ...user,
-          description: response.description,
-        });
-      },
-    });
+    useEditDescription();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
