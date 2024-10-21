@@ -1,16 +1,12 @@
 import { useRef, useState } from "react";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import usersService from "../services/users";
 import User from "./Users/User";
-import { User as UserType } from "../types/types";
+import { IRefetchLoggedInUser, User as UserType } from "../types/types";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import useMutationWithNotificationOnError from "../hooks/useMutationWithNotificationOnError";
 import ErrorNotification from "../components/ErrorNotification";
+import useUploadProfileImage from "../hooks/useUploadProfileImage";
 
 interface UserConnectionListProps {
   title: string;
@@ -47,13 +43,7 @@ const ProfileImage = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { mutation: uploadProfileImageMutation, notification: error } =
-    useMutationWithNotificationOnError({
-      mutationFn: usersService.uploadProfileImage,
-      onSuccess: (response) => {
-        console.log(response);
-        refetchLoggedInUser();
-      },
-    });
+    useUploadProfileImage({ refetchLoggedInUser });
 
   const handleClick = () => {
     fileInputRef.current?.click();
@@ -206,10 +196,6 @@ const Description = ({ description }: IDescription) => {
     </>
   );
 };
-
-interface IRefetchLoggedInUser {
-  (options?: RefetchOptions): Promise<QueryObserverResult<UserType, Error>>;
-}
 
 interface Props {
   loggedInUser?: UserType;

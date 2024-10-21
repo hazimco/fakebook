@@ -1,3 +1,5 @@
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+
 export interface User {
   id: string;
   username: string;
@@ -42,4 +44,8 @@ export interface LoginResponse {
 export interface Credentials {
   username: string;
   password: string;
+}
+
+export interface IRefetchLoggedInUser {
+  (options?: RefetchOptions): Promise<QueryObserverResult<User, Error>>;
 }
