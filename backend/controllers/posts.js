@@ -3,40 +3,48 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 const middleware = require("../utils/middleware");
 
-postsRouter.get("/", async (req, res) => {
+postsRouter.get("/", middleware.addDecodedUserToReqObject, async (req, res) => {
   const posts = await Post.find({}).populate("user", { username: 1, id: 1 });
   res.json(posts);
 });
 
-postsRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
+postsRouter.get(
+  "/:id",
+  middleware.addDecodedUserToReqObject,
+  async (req, res) => {
+    const { id } = req.params;
 
-  const post = await Post.findById(id);
+    const post = await Post.findById(id);
 
-  if (!post) {
-    res.status(400).json({ error: "post not found" });
-    return;
+    if (!post) {
+      res.status(400).json({ error: "post not found" });
+      return;
+    }
+
+    res.json(post);
   }
+);
 
-  res.json(post);
-});
+postsRouter.get(
+  "/:id/comments",
+  middleware.addDecodedUserToReqObject,
+  async (req, res) => {
+    const { id } = req.params;
 
-postsRouter.get("/:id/comments", async (req, res) => {
-  const { id } = req.params;
+    const comments = await Comment.find({ post: id }).populate("user", {
+      username: 1,
+    });
 
-  const comments = await Comment.find({ post: id }).populate("user", {
-    username: 1,
-  });
+    if (!comments || comments.length === 0) {
+      res
+        .status(400)
+        .json({ error: `no comments found for post with id: ${id}` });
+      return;
+    }
 
-  if (!comments || comments.length === 0) {
-    res
-      .status(400)
-      .json({ error: `no comments found for post with id: ${id}` });
-    return;
+    res.json(comments);
   }
-
-  res.json(comments);
-});
+);
 
 postsRouter.post("/", middleware.addUserToReqObject, async (req, res) => {
   const { text } = req.body;

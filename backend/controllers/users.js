@@ -7,7 +7,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const sharp = require("sharp");
 
-usersRouter.get("/", async (req, res) => {
+usersRouter.get("/", middleware.addDecodedUserToReqObject, async (req, res) => {
   const users = await User.find({});
   res.json(users);
 });
