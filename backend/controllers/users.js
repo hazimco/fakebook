@@ -150,19 +150,26 @@ usersRouter.post(
 
 usersRouter.put(
   "/description",
-  middleware.addUserToReqObject,
+  middleware.addDecodedUserToReqObject,
   async (req, res) => {
     const { description } = req.body;
-    const { user } = req;
+    const { decodedUser } = req;
 
-    user.description = description;
+    const updatedUser = await User.findByIdAndUpdate(
+      decodedUser.id,
+      { description },
+      { returnDocument: "after", runValidators: true } //"after" returns updated document (default is the document before the update), and runValidators: true checks that description is not longer than allowed
+    );
 
-    const savedUser = await user.save();
-
-    res.json({
-      username: savedUser.username,
-      description: savedUser.description,
-    });
+    if (updatedUser) {
+      res.json({
+        username: updatedUser.username,
+        description: updatedUser.description,
+      });
+    } else {
+      res.status(404).json({ error: "user not found" });
+      return;
+    }
   }
 );
 

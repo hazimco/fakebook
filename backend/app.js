@@ -19,6 +19,7 @@ mongoose
   .catch((error) => {
     console.log("Error connecting to MongoDB:", error.message);
   });
+// mongoose.set("debug", true); // uncomment to see database queries in the terminal
 
 app.use(cors());
 app.use(express.json());

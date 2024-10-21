@@ -46,7 +46,23 @@ const addUserToReqObject = async (req, res, next) => {
   next();
 };
 
+/** Use if you want to handle mongoose request yourself, e.g. with findByIdAndUpdate() */
+const addDecodedUserToReqObject = async (req, res, next) => {
+  const token = getTokenFromRequest(req);
+
+  const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decodedUser.id) {
+    res.status(401).json({ error: "invalid token" });
+    return;
+  }
+
+  req.decodedUser = decodedUser;
+
+  next();
+};
+
 module.exports = {
   errorHandler,
   addUserToReqObject,
+  addDecodedUserToReqObject,
 };
