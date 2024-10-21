@@ -136,7 +136,7 @@ usersRouter.post(
 
     user.profileImage = {
       data: compressedImageBuffer,
-      contentType: req.file.mimetype,
+      contentType: "image/jpeg",
     };
 
     await user.save();
