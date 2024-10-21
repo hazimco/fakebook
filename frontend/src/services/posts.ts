@@ -4,17 +4,29 @@ import { Comment, Post } from "../types/types";
 const baseUrl = "/api/posts";
 
 const getAll = async () => {
-  const response = await axios.get<Post[]>(baseUrl);
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.get<Post[]>(baseUrl, config);
   return response.data;
 };
 
 const get = async (id: string) => {
-  const response = await axios.get<Post>(`${baseUrl}/${id}`);
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.get<Post>(`${baseUrl}/${id}`, config);
   return response.data;
 };
 
 const getComments = async (postId: string) => {
-  const response = await axios.get<Comment[]>(`${baseUrl}/${postId}/comments`);
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.get<Comment[]>(
+    `${baseUrl}/${postId}/comments`,
+    config
+  );
   return response.data;
 };
 

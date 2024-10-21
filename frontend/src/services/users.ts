@@ -4,7 +4,10 @@ import { Credentials, User } from "../types/types";
 const baseUrl = "/api/users";
 
 const getAll = async () => {
-  const response = await axios.get<User[]>(baseUrl);
+  const config = {
+    headers: { Authorization: tokenService.getToken() },
+  };
+  const response = await axios.get<User[]>(baseUrl, config);
   return response.data;
 };
 
