@@ -19,6 +19,11 @@ usersRouter.get("/me", middleware.addUserToReqObject, async (req, res) => {
 });
 
 usersRouter.post("/", async (req, res) => {
+  if (process.env.NODE_ENV === "production") {
+    res.status(403).json({ error: "user creation currently not allowed" });
+    return;
+  }
+
   const { username, password } = req.body;
 
   if (!password) {
