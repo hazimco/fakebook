@@ -1,5 +1,6 @@
 const express = require("express");
 require("express-async-errors");
+const morgan = require("morgan");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const postsRouter = require("./controllers/posts");
@@ -21,8 +22,17 @@ mongoose
   });
 // mongoose.set("debug", true); // uncomment to see database queries in the terminal
 
+morgan.token("body", (req) => {
+  return JSON.stringify(req.body);
+});
+
 app.use(cors());
 app.use(express.json());
+app.use(
+  morgan(
+    "[:date[web]] :remote-addr :method :url :status :res[content-length] - :response-time ms :body"
+  )
+);
 
 app.get("/", (req, res) => {
   res.send("hello world");
