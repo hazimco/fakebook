@@ -23,7 +23,7 @@ const Description = ({ description }: Props) => {
 
   return showForm ? (
     <form
-      className="flex flex-col flex-1 text-sm gap-2"
+      className="flex flex-col flex-1 text-base gap-2"
       onSubmit={handleSubmit}
     >
       <textarea

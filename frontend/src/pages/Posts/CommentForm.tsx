@@ -29,7 +29,7 @@ const CommentForm = ({ postId, setShowForm }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="text-sm flex-1 mr-2 flex flex-col gap-1"
+      className="text-base flex-1 mr-2 flex flex-col gap-1"
     >
       <input
         placeholder="Comment..."

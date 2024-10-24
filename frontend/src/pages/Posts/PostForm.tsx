@@ -21,7 +21,7 @@ const PostForm = () => {
   };
 
   return (
-    <div className="mb-5 text-sm">
+    <div className="mb-5 text-base">
       {showForm ? (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <input
