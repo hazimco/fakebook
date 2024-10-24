@@ -8,7 +8,8 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:ui": "npm run build --prefix ../frontend && rm -rf dist && cp -r ../frontend/dist dist"
   },
   "author": "hazimco",
   "license": "ISC",
