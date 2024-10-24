@@ -37,6 +37,7 @@ const PostForm = () => {
                 Done
               </button>
               <button
+                type="button"
                 onClick={closeForm}
                 className="bg-red-500 hover:bg-red-400 active:bg-red-600 py-1 px-3 rounded-md text-white"
               >

@@ -40,6 +40,7 @@ const Description = ({ description }: Props) => {
           Done
         </button>
         <button
+          type="button"
           onClick={() => setShowForm(false)}
           className="bg-red-500 hover:bg-red-400 active:bg-red-600 px-3 rounded-md text-white"
         >
