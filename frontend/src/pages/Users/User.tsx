@@ -4,6 +4,7 @@ import { User as UserType } from "../../types/types";
 import ErrorNotification from "../../components/ErrorNotification";
 
 import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
+import { Link } from "react-router-dom";
 
 interface Props {
   user: UserType;
@@ -46,12 +47,12 @@ const User = ({ user, loggedInUser }: Props) => {
   return (
     <div className="border-slate-300 border bg-white rounded-md py-2 px-4 mb-2 text-sm">
       <div className="flex justify-between">
-        <div className="max-w-52">
+        <Link to={`/users/${user.id}`} className="max-w-52">
           <div className="font-semibold [word-break:break-word]">
             {username}
           </div>
           <div className="italic font-light">{postCount} posts</div>
-        </div>
+        </Link>
         {loggedInUser.id !== id && (
           <button
             onClick={handleClick}

@@ -77,6 +77,15 @@ const App = () => {
         />
         <Route path="/posts" element={<Posts />} />
         <Route path="/users" element={<Users loggedInUser={loggedInUser} />} />
+        <Route
+          path="/users/:id"
+          element={
+            <Profile
+              loggedInUser={loggedInUser}
+              refetchLoggedInUser={refetch}
+            />
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate to={"/"} replace />} />
     </Routes>
