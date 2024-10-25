@@ -42,6 +42,7 @@ const Profile = ({ loggedInUser, refetchLoggedInUser }: Props) => {
         description={profileUser.description}
         profileImage={profileUser.profileImage}
         refetchLoggedInUser={refetchLoggedInUser}
+        loggedInUser={loggedInUser}
       />
       <div className="flex flex-col sm:flex-row gap-4">
         <UserConnectionList

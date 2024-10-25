@@ -1,14 +1,19 @@
 import { useState } from "react";
 import ErrorNotification from "../../components/ErrorNotification";
 import useEditDescription from "../../hooks/useEditDescription";
+import { User } from "../../types/types";
+import { useParams } from "react-router-dom";
 
 interface Props {
   description: string;
+  loggedInUser: User;
 }
 
-const Description = ({ description }: Props) => {
+const Description = ({ description, loggedInUser }: Props) => {
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
+
+  const userId = useParams().id;
 
   const { mutation: editDescriptionMutation, notification: error } =
     useEditDescription();
@@ -51,12 +56,14 @@ const Description = ({ description }: Props) => {
   ) : (
     <>
       {description && <p className="text-sm">{description}</p>}
-      <button
-        onClick={() => setShowForm(true)}
-        className="border border-slate-400 bg-slate-300 rounded-md text-sm self-start px-1.5"
-      >
-        {description ? "Edit description" : "Add description"}
-      </button>
+      {(!userId || userId === loggedInUser.id) && (
+        <button
+          onClick={() => setShowForm(true)}
+          className="border border-slate-400 bg-slate-300 rounded-md text-sm self-start px-1.5"
+        >
+          {description ? "Edit description" : "Add description"}
+        </button>
+      )}
       <ErrorNotification message={error} />
     </>
   );

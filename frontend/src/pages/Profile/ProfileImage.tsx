@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { IRefetchLoggedInUser } from "../../types/types";
+import { IRefetchLoggedInUser, User } from "../../types/types";
 import useUploadProfileImage from "../../hooks/useUploadProfileImage";
 import ErrorNotification from "../../components/ErrorNotification";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
@@ -8,9 +8,15 @@ interface Props {
   imgUrl?: string;
   username: string;
   refetchLoggedInUser: IRefetchLoggedInUser;
+  loggedInUser: User;
 }
 
-const ProfileImage = ({ imgUrl, username, refetchLoggedInUser }: Props) => {
+const ProfileImage = ({
+  imgUrl,
+  username,
+  refetchLoggedInUser,
+  loggedInUser,
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { mutation: uploadProfileImageMutation, notification: error } =
@@ -47,12 +53,14 @@ const ProfileImage = ({ imgUrl, username, refetchLoggedInUser }: Props) => {
       ) : (
         <UserCircleIcon />
       )}
-      <button
-        onClick={handleClick}
-        className="border border-slate-400 bg-slate-300 rounded-md text-sm"
-      >
-        Edit
-      </button>
+      {loggedInUser.username === username && (
+        <button
+          onClick={handleClick}
+          className="border border-slate-400 bg-slate-300 rounded-md text-sm"
+        >
+          Edit
+        </button>
+      )}
       <input
         type="file"
         accept="image/*"

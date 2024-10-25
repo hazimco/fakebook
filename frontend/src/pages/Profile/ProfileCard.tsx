@@ -7,6 +7,7 @@ interface Props {
   description: string;
   profileImage?: User["profileImage"];
   refetchLoggedInUser: IRefetchLoggedInUser;
+  loggedInUser: User;
 }
 
 const ProfileCard = ({
@@ -14,6 +15,7 @@ const ProfileCard = ({
   description,
   profileImage,
   refetchLoggedInUser,
+  loggedInUser,
 }: Props) => {
   const imgUrl =
     profileImage &&
@@ -25,12 +27,13 @@ const ProfileCard = ({
         imgUrl={imgUrl}
         username={username}
         refetchLoggedInUser={refetchLoggedInUser}
+        loggedInUser={loggedInUser}
       />
       <div className="flex flex-col gap-1 flex-1">
         <h1 className="font-bold text-xl [word-break:break-word] leading-none">
           {username}
         </h1>
-        <Description description={description} />
+        <Description description={description} loggedInUser={loggedInUser} />
       </div>
     </div>
   );
