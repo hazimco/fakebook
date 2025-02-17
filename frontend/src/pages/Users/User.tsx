@@ -5,6 +5,7 @@ import ErrorNotification from "../../components/ErrorNotification";
 
 import useMutationWithNotificationOnError from "../../hooks/useMutationWithNotificationOnError";
 import { Link } from "react-router-dom";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   user: UserType;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const User = ({ user, loggedInUser }: Props) => {
-  const { username, id } = user;
+  const { username, id, profileImage } = user;
   const postCount = user.posts.length;
 
   const followedByLoggedInUser = loggedInUser.following.includes(id);
@@ -44,14 +45,31 @@ const User = ({ user, loggedInUser }: Props) => {
       : followMutation.mutate(id);
   };
 
+  const imgSrc = `data:${profileImage?.contentType};base64,${profileImage?.data}`;
+
   return (
     <div className="border-slate-300 border bg-white rounded-md py-2 px-4 mb-2 text-sm">
       <div className="flex justify-between">
-        <Link to={`/users/${user.id}`} className="max-w-52">
-          <div className="font-semibold [word-break:break-word]">
-            {username}
+        <Link
+          to={`/users/${user.id}`}
+          className="max-w-52 flex gap-2 items-center"
+        >
+          <div className="flex-shrink-0 w-14 h-14">
+            {profileImage ? (
+              <img
+                src={imgSrc}
+                className="w-full h-full rounded-full object-cover object-top"
+              />
+            ) : (
+              <UserCircleIcon className="scale-110" />
+            )}
           </div>
-          <div className="italic font-light">{postCount} posts</div>
+          <div className="">
+            <div className="font-semibold [word-break:break-word]">
+              {username}
+            </div>
+            <div className="italic font-light">{postCount} posts</div>
+          </div>
         </Link>
         {loggedInUser.id !== id && (
           <button
