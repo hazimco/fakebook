@@ -4,7 +4,11 @@ const Comment = require("../models/comment");
 const middleware = require("../utils/middleware");
 
 postsRouter.get("/", middleware.addDecodedUserToReqObject, async (req, res) => {
-  const posts = await Post.find({}).populate("user", { username: 1, id: 1 });
+  const posts = await Post.find({}).populate("user", {
+    username: 1,
+    id: 1,
+    profileImage: 1,
+  });
   res.json(posts);
 });
 
