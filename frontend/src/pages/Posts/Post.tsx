@@ -41,12 +41,14 @@ const Post = ({
               <UserCircleIcon className="scale-110" />
             )}
           </div>
-          <div className="font-semibold mb-1">{username}</div>
+          <div>
+            <div className="font-semibold">{username}</div>
+            <div className="text-xs">
+              {format(createdAt, "HH:mm - MMM dd, yyyy")}
+            </div>
+          </div>
         </div>
         <div className="mb-3">{text}</div>
-        <div className="text-xs">
-          {format(createdAt, "HH:mm - MMM dd, yyyy")}
-        </div>
         <div className="my-2 flex justify-between">
           {showForm ? (
             <CommentForm postId={id} setShowForm={setShowForm} />
