@@ -29,6 +29,7 @@ const Posts = () => {
             createdAt={post.createdAt}
             username={post.user.username}
             commentsAvailable={post.comments.length > 0}
+            profileImage={post.user.profileImage}
             id={post.id}
           />
         );

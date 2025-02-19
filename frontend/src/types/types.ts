@@ -10,7 +10,7 @@ export interface User {
   description: string;
 }
 
-interface ProfileImage {
+export interface ProfileImage {
   data: string;
   contentType: string;
 }
@@ -22,6 +22,7 @@ export interface Post {
   user: {
     username: string;
     id: string;
+    profileImage?: ProfileImage;
   };
 }
 
